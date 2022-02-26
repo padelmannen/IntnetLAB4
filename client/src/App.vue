@@ -1,3 +1,4 @@
+
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <button
@@ -19,9 +20,9 @@
       </ul>
     </div>
   </nav>
-  <section class="container-fluid py-4">
+  <!-- <section class="container-fluid py-4">
     <router-view />
-  </section>
+  </section> -->
 </template>
 
 <script>
