@@ -70,6 +70,7 @@ model.createRoom("c++"); // demo call
 model.createRoom("java"); // demo call
 model.createRoom("js"); // demo call
 model.createRoom("python"); // demo call
+model.createTimeSlot(1, "2", "10:00", "Jesper")
 
 // Handle socket.io connections.
 io.on("connection", (socket) => {

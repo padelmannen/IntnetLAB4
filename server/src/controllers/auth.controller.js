@@ -25,6 +25,7 @@ const requireAuth = (req, res, next) => {
 };
 
 router.get("/users/me", (req, res) => {
+  console.log("users")
   const { id } = req.session;
   const user = model.findUserById(id);
 

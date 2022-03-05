@@ -22,6 +22,13 @@ router.get("/rooms", (req, res) => {
   res.status(200).json({ rooms }); // same as { rooms: rooms }
 });
 
+router.get("/timeSlots", (req, res) => {
+  const timeSlots = model.getTimeSlots();
+
+  // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
+  res.status(200).json({ timeSlots }); // same as { rooms: rooms }
+});
+
 router.get("/rooms/:name/messages", (req, res) => {
   // Check how to access data being sent as a path, query, header and cookie parameter or in the HTTP request body.
   const { name } = req.params;

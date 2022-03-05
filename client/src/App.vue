@@ -17,6 +17,12 @@
         <li class="nav-item">
           <a class="nav-link" href="#" @click="redirect('/rooms')">Rooms</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" @click="redirect('/admin')">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" @click="redirect('/timeSlots')">TimeSlots</a>
+        </li>
       </ul>
     </div>
   </nav>

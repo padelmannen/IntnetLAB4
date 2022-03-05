@@ -1,10 +1,13 @@
 import Room from "./models/room.model.js";
+import TimeSlot from "./models/timeSlot.model.js";
 import User from "./models/user.model.js";
 
 class Model {
   constructor() {
     this.rooms = {};
     this.users = {};
+    this.timeSlots = {};
+    this.admins = {};
 
     this.io = undefined;
   }
@@ -27,6 +30,12 @@ class Model {
     this.rooms[name] = new Room(name);
   }
 
+  createTimeSlot(adminID, id, time, bookedBy){
+    console.log("skapar timeslot")
+
+    this.timeSlots[adminID] = new TimeSlot(adminID, id, time, bookedBy)
+  }
+
   /**
    * Return the room object with the matching name.
    * @param {String} name - The name of the room.
@@ -41,7 +50,14 @@ class Model {
    * @returns {Room[]}
    */
   getRooms() {
+    console.log("hämtar rum")
     return Object.values(this.rooms);
+  }
+
+  getTimeSlots(){
+    console.log("hämtar timeslots")
+
+    return Object.values(this.timeSlots)
   }
 
   /**

@@ -3,6 +3,8 @@ import store from "../store";
 import Rooms from "../views/Rooms.vue";
 import Room from "../views/Room.vue";
 import Login from "../views/Login.vue";
+import TimeSlots from "../views/TimeSlots.vue"
+import Admin from "../views/Admin.vue"
 
 const routes = [
   {
@@ -20,6 +22,14 @@ const routes = [
   {
     path: "/login",
     component: Login,
+  },
+  {
+    path: "/timeSlots",
+    component: TimeSlots,
+  },
+  {
+    path: "/admin",
+    component: Admin,
   },
 ];
 
