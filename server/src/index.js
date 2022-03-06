@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 import auth from "./controllers/auth.controller.js";
 import chat from "./controllers/chat.controller.js";
 
-import model from "./model.js";
+import model from "./newModel.js";
 
 const port = 8989;
 const app = express(); // Create express app.
@@ -66,10 +66,10 @@ app.use("/api", auth.requireAuth, chat.router);
 
 // Initialize model.
 model.init(io);
-model.createRoom("c++"); // demo call
-model.createRoom("java"); // demo call
-model.createRoom("js"); // demo call
-model.createRoom("python"); // demo call
+model.createTimeSlot("08:00");
+model.createTimeSlot("12:00");
+model.createTimeSlot("16:00");
+model.createTimeSlot("20:00");
 
 // Handle socket.io connections.
 io.on("connection", (socket) => {

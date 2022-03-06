@@ -11,10 +11,10 @@
     <div id="navbarNav" class="collapse navbar-collapse mx-2">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="#" @click="redirect('/login')">Login</a>
+          <a class="nav-link" href="#" @click="redirect('/login')">Booking</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" @click="redirect('/rooms')">Rooms</a>
+          <a class="nav-link" href="#" @click="redirect('/admin')">Admin</a>
         </li>
       </ul>
     </div>

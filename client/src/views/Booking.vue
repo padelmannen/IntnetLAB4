@@ -1,40 +1,43 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <form class="col" @submit.prevent="authenticate()">
-      <label for="username" class="form-label h4">Login below:</label>
-      <input
-        id="username"
-        v-model="username"
-        type="text"
-        class="form-control"
-        placeholder="Username"
-        required
-        autofocus
-      />
-      <input
-        id="password"
-        v-model="password"
-        type="text"
-        class="form-control"
-        placeholder="Password"
-        required
-        autofocus
-      />
-      <button type="submit" class="btn btn-dark mt-4 float-end">Login</button>
-    </form>
+    <div class="col list-group">
+      <label for="timetable" class="form-label h4">Available times:</label>
+        <button
+          v-for="room in rooms"
+          :key="room.time"
+          type="button"
+          class="list-group-item list-group-item-action my-2 py-2"
+          @click="bookTime(room.time)"
+        >
+          {{ room.time }}
+        </button>
+      </div>
     <div class="col"></div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "LoginView",
+  name: "BookingView",
   components: {},
   data: () => ({
     username: "",
+    rooms: [],
   }),
+  created() {
+    fetch("/api/rooms")
+      .then((res) => res.json())
+      .then(({ rooms }) => {
+        this.rooms = rooms;
+      })
+      .catch(console.error);
+  },
   methods: {
+    bookTime(time) {
+      //this.$router.push(`/rooms/${name}`);
+      alert("TID VALD: "+ time);
+    },
     authenticate() {
       const { commit } = this.$store;
       const { push } = this.$router;

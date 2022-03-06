@@ -15,11 +15,11 @@ const requireAuth = (req, res, next) => {
   const { id } = req.session;
   const user = model.findUserById(id);
 
-  if (user === undefined) {
+  //if (user === undefined) {
     // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
-    res.status(401).end();
-    return;
-  }
+    //res.status(401).end();
+    //return;
+  //}
 
   next();
 };
@@ -27,7 +27,7 @@ const requireAuth = (req, res, next) => {
 router.get("/users/me", (req, res) => {
   const { id } = req.session;
   const user = model.findUserById(id);
-
+  
   res.status(200).json({ authenticated: user !== undefined });
 });
 

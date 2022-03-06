@@ -18,5 +18,9 @@
     "server:lint:fix": "cd server && npm run lint:fix",
     "server:start": "cd server && npm run start",
     "start": "npm run client:build && npm run server:start"
+  },
+  "dependencies": {
+    "language-stylus": "^3.2.0",
+    "sass": "^1.49.9"
   }
 }

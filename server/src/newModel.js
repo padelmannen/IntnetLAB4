@@ -1,9 +1,10 @@
 import Room from "./models/room.model.js";
 import User from "./models/user.model.js";
+import timeslot from "./models/timeslot.model.js";
 
 class Model {
   constructor() {
-    this.rooms = {};
+    this.timeslots = {};
     this.users = {};
 
     this.io = undefined;
@@ -20,28 +21,28 @@ class Model {
 
   /**
    * Create a room with the given name.
-   * @param {String} name - The name of the room.
+   * @param {String} time - The name of the room.
    * @returns {void}
    */
-  createRoom(name) {
-    this.rooms[name] = new Room(name);
+  createTimeSlot(time) {
+    this.timeslots[time] = new timeslot(time);
   }
 
   /**
    * Return the room object with the matching name.
-   * @param {String} name - The name of the room.
-   * @returns {Room}
+   * @param {String} time - The name of the room.
+   * @returns {timeslot}
    */
-  findRoomByName(name) {
-    return this.rooms[name];
+  findRoomByName(time) {
+    return this.timeslots[time];
   }
 
   /**
    * Return all the rooms.
-   * @returns {Room[]}
+   * @returns {timeslot[]}
    */
   getRooms() {
-    return Object.values(this.rooms);
+    return Object.values(this.timeslots);
   }
 
   /**
@@ -63,28 +64,24 @@ class Model {
     return this.users[id];
   }
 
-  //kanske kan användas vid utloggning
-  removeUser(id){
-    this.users[id] = undefined;
-  }
   /**
    * Push out a message to all connected clients in the given room.
-   * @param {Room} room - The room to add the message to.
+   * @param {timeslot} timeslot - The room to add the message to.
    * @param {String} message - The message to add.
    * @returns {void}
    */
-  broadcast(room, message) {
-    this.io.in(room.name).emit("msg", message);
+  broadcast(timeslot, message) {
+    this.io.in(timeslot.time).emit("msg", message);
   }
 
   /**
    * Join a specified room.
    * @param {String} socketID - An unique identifier for the user socket.io session.
-   * @param {Room} room - The room to join.
+   * @param {timeslot} timeslot - The room to join.
    * @returns {void}
    */
-  join(socketId, room) {
-    this.io.in(socketId).socketsJoin(room.name);
+  join(socketId, timeslot) {
+    this.io.in(socketId).socketsJoin(timeslot.time);
   }
 }
 

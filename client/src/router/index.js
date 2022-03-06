@@ -3,6 +3,9 @@ import store from "../store";
 import Rooms from "../views/Rooms.vue";
 import Room from "../views/Room.vue";
 import Login from "../views/Login.vue";
+import Booking from "../views/Booking.vue";
+import AdminLogin from "../views/AdminLogin.vue";
+import Admin from "../views/Admin.vue";
 
 const routes = [
   {
@@ -19,7 +22,15 @@ const routes = [
   },
   {
     path: "/login",
-    component: Login,
+    component: Booking,
+  },
+  {
+    path: "/adminlogin",
+    component: AdminLogin,
+  },
+  {
+    path: "/admin",
+    component: Admin,
   },
 ];
 
@@ -30,11 +41,17 @@ const router = createRouter({
 
 // Setup authentication guard.
 router.beforeEach((to, from, next) => {
-  if (store.state.authenticated || to.path === "/login") {
+  if (store.state.authenticated || to.path === "/login" || to.path === "/adminlogin") {
     next();
   } else {
-    console.info("Unauthenticated user. Redirecting to login page.");
-    next("/login");
+    if (to.path === "/admin"){
+      next("/adminlogin")
+    }
+    else{
+      console.info("Unauthenticated user. Redirecting to login page.");
+      next("/login");
+    }
+
   }
 });
 

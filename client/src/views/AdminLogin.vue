@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col"></div>
     <form class="col" @submit.prevent="authenticate()">
-      <label for="username" class="form-label h4">Login below:</label>
+      <label for="admin" class="form-label h4">Admin login:</label>
       <input
         id="username"
         v-model="username"
@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "LoginView",
+  name: "adminLoginView",
   components: {},
   data: () => ({
     username: "",
@@ -47,7 +47,7 @@ export default {
         .then((res) => res.json())
         .then(({ authenticated }) => {
           commit("setAuthenticated", authenticated);
-          push(authenticated === true ? "/rooms" : "/login");
+          push(authenticated === true ? "/admin" : "/login");
         })
         .catch(console.error);
     },

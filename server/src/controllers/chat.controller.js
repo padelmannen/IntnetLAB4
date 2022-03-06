@@ -1,5 +1,5 @@
 import { Router } from "express";
-import model from "../model.js";
+import model from "../newModel.js";
 
 const router = Router();
 
@@ -22,10 +22,11 @@ router.get("/rooms", (req, res) => {
   res.status(200).json({ rooms }); // same as { rooms: rooms }
 });
 
-router.get("/rooms/:name/messages", (req, res) => {
+router.get("/rooms/:time/messages", (req, res) => {
   // Check how to access data being sent as a path, query, header and cookie parameter or in the HTTP request body.
-  const { name } = req.params;
-  const room = model.findRoomByName(name);
+  const { time } = req.params;
+  const room = model.findRoomByName(time);
+  console.log(req)
 
   // Use an unique session identifier to access information about the user making the request.
   const { id, socketID } = req.session;
