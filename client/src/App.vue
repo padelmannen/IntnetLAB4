@@ -11,7 +11,7 @@
     <div id="navbarNav" class="collapse navbar-collapse mx-2">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="#" @click="redirect('/login')">Booking</a>
+          <a class="nav-link" href="#" @click="redirect('/booking')">Booking</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" @click="redirect('/admin')">Admin</a>
@@ -43,7 +43,7 @@ export default {
       .then((res) => res.json())
       .then(({ authenticated }) => {
         commit("setAuthenticated", authenticated);
-        push(authenticated === true ? "/rooms" : "/login");
+        push(authenticated === true ? "/rooms" : "/booking");
       })
       .catch(console.error);
   },

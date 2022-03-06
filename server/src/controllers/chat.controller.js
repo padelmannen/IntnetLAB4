@@ -16,17 +16,16 @@ const router = Router();
  */
 
 router.get("/rooms", (req, res) => {
-  const rooms = model.getRooms();
+  const rooms = model.getTimeSlots();
 
   // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
   res.status(200).json({ rooms }); // same as { rooms: rooms }
 });
 
-router.get("/rooms/:time/messages", (req, res) => {
+router.get("/rooms/:name/messages", (req, res) => {
   // Check how to access data being sent as a path, query, header and cookie parameter or in the HTTP request body.
-  const { time } = req.params;
-  const room = model.findRoomByName(time);
-  console.log(req)
+  const { name } = req.params;
+  const room = model.findRoomByName(name);
 
   // Use an unique session identifier to access information about the user making the request.
   const { id, socketID } = req.session;

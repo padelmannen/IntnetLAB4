@@ -1,10 +1,6 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <Confirm
-      v-if="showConfirmWindow"
-    />
-    <!-- behöver nog använda props för att skicka in rätt tid -->
     <div class="col list-group">
       <label for="timetable" class="form-label h4">Available times:</label>
         <button
@@ -17,6 +13,14 @@
           {{ room.time }}
         </button>
       </div>
+    <div class="col"></div>
+    <div class="row">
+      <div class="col"></div>
+      <Confirm
+        v-if="showConfirmWindow"
+      />
+      <!-- behöver nog använda props för att skicka in rätt tid -->
+    </div>
     <div class="col"></div>
   </div>
 </template>
@@ -60,7 +64,7 @@ export default {
       const { commit } = this.$store;
       const { push } = this.$router;
 
-      fetch("/api/login", {
+      fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: this.username }),
@@ -68,7 +72,7 @@ export default {
         .then((res) => res.json())
         .then(({ authenticated }) => {
           commit("setAuthenticated", authenticated);
-          push(authenticated === true ? "/rooms" : "/login");
+          push(authenticated === true ? "/rooms" : "/booking");
         })
         .catch(console.error);
     },

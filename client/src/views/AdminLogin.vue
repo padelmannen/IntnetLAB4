@@ -39,7 +39,7 @@ export default {
       const { commit } = this.$store;
       const { push } = this.$router;
 
-      fetch("/api/login", {
+      fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: this.username }),
@@ -47,7 +47,7 @@ export default {
         .then((res) => res.json())
         .then(({ authenticated }) => {
           commit("setAuthenticated", authenticated);
-          push(authenticated === true ? "/admin" : "/login");
+          push(authenticated === true ? "/admin" : "/booking");
         })
         .catch(console.error);
     },

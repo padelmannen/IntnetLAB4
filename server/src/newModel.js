@@ -33,7 +33,7 @@ class Model {
    * @param {String} time - The name of the room.
    * @returns {timeslot}
    */
-  findRoomByName(time) {
+  findTimeSlotByTime(time) {
     return this.timeslots[time];
   }
 
@@ -41,7 +41,7 @@ class Model {
    * Return all the rooms.
    * @returns {timeslot[]}
    */
-  getRooms() {
+  getTimeSlots() {
     return Object.values(this.timeslots);
   }
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import model from "../model.js";
+import model from "../newModel.js";
 
 const router = Router();
 
@@ -31,7 +31,7 @@ router.get("/users/me", (req, res) => {
   res.status(200).json({ authenticated: user !== undefined });
 });
 
-router.post("/login", (req, res) => {
+router.post("/booking", (req, res) => {
   // Check how to access data being sent as a path, query, header and cookie parameter or in the HTTP request body.
   const { username } = req.body;
 

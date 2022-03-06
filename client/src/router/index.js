@@ -22,7 +22,7 @@ const routes = [
     component: Room,
   },
   {
-    path: "/login",
+    path: "/booking",
     component: Booking,
   },
   {
@@ -46,15 +46,15 @@ const router = createRouter({
 
 // Setup authentication guard.
 router.beforeEach((to, from, next) => {
-  if (store.state.authenticated || to.path === "/login" || to.path === "/adminlogin" || to.path === "/confirm") {
+  if (store.state.authenticated || to.path === "/booking" || to.path === "/adminlogin" || to.path === "/confirm") {
     next();
   } else {
     if (to.path === "/admin"){
       next("/adminlogin")
     }
     else{
-      console.info("Unauthenticated user. Redirecting to login page.");
-      next("/login");
+      console.info("Unauthenticated user. Redirecting to booking page.");
+      next("/booking");
     }
 
   }
