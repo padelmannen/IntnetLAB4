@@ -1,6 +1,10 @@
 <template>
   <div class="row">
     <div class="col"></div>
+    <Confirm
+      v-if="showConfirmWindow"
+    />
+    <!-- behöver nog använda props för att skicka in rätt tid -->
     <div class="col list-group">
       <label for="timetable" class="form-label h4">Available times:</label>
         <button
@@ -17,13 +21,21 @@
   </div>
 </template>
 
+
 <script>
+import Confirm from "./ConfirmBooking.vue";
+
 export default {
   name: "BookingView",
-  components: {},
+  components: {
+    Confirm,
+  },
+
   data: () => ({
     username: "",
     rooms: [],
+    showConfirmWindow: false,
+    curTimePressed: "",
   }),
   created() {
     fetch("/api/rooms")
@@ -35,8 +47,14 @@ export default {
   },
   methods: {
     bookTime(time) {
-      //this.$router.push(`/rooms/${name}`);
-      alert("TID VALD: "+ time);
+      console.log("time pressed")
+      this.showConfirmWindow = true
+      this.curTimePressed = time;
+
+      //this.$router.push(`/confirm`);
+
+
+      //alert("TID VALD: "+ time);
     },
     authenticate() {
       const { commit } = this.$store;

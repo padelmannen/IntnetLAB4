@@ -6,6 +6,7 @@ import Login from "../views/Login.vue";
 import Booking from "../views/Booking.vue";
 import AdminLogin from "../views/AdminLogin.vue";
 import Admin from "../views/Admin.vue";
+import ConfirmBooking from "../views/ConfirmBooking.vue";
 
 const routes = [
   {
@@ -32,6 +33,10 @@ const routes = [
     path: "/admin",
     component: Admin,
   },
+  {
+    path: "/confirm",
+    component: ConfirmBooking,
+  },
 ];
 
 const router = createRouter({
@@ -41,7 +46,7 @@ const router = createRouter({
 
 // Setup authentication guard.
 router.beforeEach((to, from, next) => {
-  if (store.state.authenticated || to.path === "/login" || to.path === "/adminlogin") {
+  if (store.state.authenticated || to.path === "/login" || to.path === "/adminlogin" || to.path === "/confirm") {
     next();
   } else {
     if (to.path === "/admin"){
