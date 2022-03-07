@@ -42,7 +42,7 @@ class Model {
    * @returns {timeslot[]}
    */
   getTimeSlots() {
-    console.log(Object.values(this.timeslots))
+    console.log("efter skapande är timeSLots: ", Object.values(this.timeslots))
     return Object.values(this.timeslots);
   }
 
