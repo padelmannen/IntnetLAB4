@@ -1,19 +1,10 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <form class="col" @submit.prevent="book()">
-      <label for="username" class="form-label h4">Fill in name and confirm:</label>
+    <form class="col" @submit.prevent="removeTimeSlot()">
+      <label for="username" class="form-label h4">Configure Time Slot</label>
       <p>Time: {{time}}</p>
-      <input
-        id="username"
-        v-model="username"
-        type="text"
-        class="form-control"
-        placeholder="Name"
-        required
-        autofocus
-      />
-      <button type="submit" class="btn btn-dark mt-4 float-end">Confirm</button>
+      <button type="submit" class="btn btn-dark mt-4 float-end">Remove</button>
       <button
         class="btn btn-dark mt-4 float-start"
         @click="$emit('close')"
@@ -31,7 +22,7 @@
 
 
 export default {
-  name: "confirmBookingView",
+  name: "configTimeSlotView",
   components: {},
   
   props: {
@@ -45,8 +36,8 @@ export default {
   
   methods: {
 
-    book(){
-        //funktion som ska göra en tid bokad
+    removeTimeSlot(){
+        //funktion som ska ta bort en tid
         this.$emit("close")
     },
     authenticate() {

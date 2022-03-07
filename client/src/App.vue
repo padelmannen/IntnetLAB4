@@ -43,7 +43,7 @@ export default {
       .then((res) => res.json())
       .then(({ authenticated }) => {
         commit("setAuthenticated", authenticated);
-        push(authenticated === true ? "/rooms" : "/booking");
+        push(authenticated === true ? "/timeslots" : "/booking");
       })
       .catch(console.error);
   },

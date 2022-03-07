@@ -15,24 +15,24 @@ const router = Router();
  * etc.
  */
 
-router.get("/rooms", (req, res) => {
-  const rooms = model.getTimeSlots();
+router.get("/timeslots", (req, res) => {
+  const timeslots = model.getTimeSlots();
 
   // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
-  res.status(200).json({ rooms }); // same as { rooms: rooms }
+  res.status(200).json({ timeslots }); // same as { rooms: rooms }
 });
 
-router.get("/rooms/:name/messages", (req, res) => {
+router.get("/timeslots/:name/messages", (req, res) => {
   // Check how to access data being sent as a path, query, header and cookie parameter or in the HTTP request body.
-  const { name } = req.params;
-  const room = model.findRoomByName(name);
+  const { time } = req.params;
+  const timeslot = model.findTimeSlotByTime(time);
 
   // Use an unique session identifier to access information about the user making the request.
   const { id, socketID } = req.session;
   const user = model.findUserById(id);
 
   // Check if a room with the given name exists.
-  if (room === undefined) {
+  if (timeslot === undefined) {
     res.status(404).end();
     return;
   }
@@ -40,20 +40,20 @@ router.get("/rooms/:name/messages", (req, res) => {
   // FIXME Check if the user making the request is authorized to request data.
 
   // Join the specified room.
-  user.joinRoom(room);
-  model.join(socketID, room);
+  user.joinRoom(timeslot);
+  model.join(socketID, timeslot);
 
   // Send a join message to all connected clients in the room.
-  room.addMessage(`${user.name} joined the room!`);
-  model.broadcast(room, `${user.name} joined the room!`);
+  timeslot.addMessage(`${user.name} joined the room!`);
+  model.broadcast(timeslot, `${user.name} joined the room!`);
 
-  res.status(200).json({ messages: room.messages });
+  res.status(200).json({ messages: timeslot.messages });
 });
 
-router.post("/rooms/:name/messages", (req, res) => {
-  const { name } = req.params;
+router.post("/timeslots/:name/messages", (req, res) => {
+  const { time } = req.params;
   const { message } = req.body;
-  const room = model.findRoomByName(name);
+  const timeslot = model.findTimeSlotByTime(time);
 
   const { id } = req.session;
   const user = model.findUserById(id);
@@ -61,8 +61,8 @@ router.post("/rooms/:name/messages", (req, res) => {
   // FIXME Check if a room with the given name exists, if the user making the request is authorized to send a message in the room etc.
 
   // Send a custom message to all connected clients in the room.
-  room.addMessage(`${user.name}: ${message}`);
-  model.broadcast(room, `${user.name}: ${message}`);
+  timeslot.addMessage(`${user.name}: ${message}`);
+  model.broadcast(timeslot, `${user.name}: ${message}`);
 
   res.status(200).end();
 });
