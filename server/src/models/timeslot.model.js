@@ -1,7 +1,7 @@
 /**
  * @class Timeslot
  */
- class Timeslot {
+ class timeslot {
     constructor(assistantID, id, time, status, bookedBy, reservedBy) {
       this.assistantID = assistantID;
       this.id = id;
@@ -22,5 +22,5 @@
     }
   }
   
-  export default Timeslot;
+  export default timeslot;
   
