@@ -4,13 +4,27 @@
     <div class="col list-group">
       <button
         v-for="timeSlot in timeSlots"
-        :key="timeSlot.id"
+        :key="timeSlot.adminID"
         type="button"
         class="list-group-item list-group-item-action my-2 py-2"
-        @click="changeTimeSlots(timeSlot.id)"
+        @click="changeTime()"
       >
-        {{ room.name }}
+        <!-- text: bookad av"{{ timeSlot.adminID }}, {"Bokad av"{timeSlot.bookedBy}} -->
+        Tid: {{ timeSlot.time }}, Bookad av: {{timeSlot.bookedBy}} 
+    
       </button>
+      <button 
+        type="button"
+        @click="addTime()"
+      >
+        Lägg till tid
+      </button>
+      <button
+        type="button"
+        @click="removeTime()"
+      >
+        Ta bort tid
+      </button
     </div>
     <div class="col"></div>
   </div>
@@ -26,17 +40,20 @@ export default {
   created() {
     fetch("/api/admin")
       .then((res) => res.json())
-      .then(({ rooms }) => {
-        this.rooms = rooms;
+      .then(({ timeSlots }) => {
+        this.timeSlots = timeSlots;
       })
       .catch(console.error);
   },
   methods: {
-    redirect(name) {
-      this.$router.push(`/admin/${name}`);
+    changeTime(){
+        console.log(`bokar tid med id ${id}`)
     },
-    changeTimeSlots(){
-        console.log("admin timeslot")
+    addTime(){
+      console.log("lägger till tid")
+    },
+    removeTime(){
+      console.log("tar bor tid")
     }
   },
 };
