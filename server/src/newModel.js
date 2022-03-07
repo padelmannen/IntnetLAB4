@@ -60,7 +60,7 @@ class Model {
       }
     });
 
-    console.log("efter skapande är timeslots: ", this.timeslots)
+    console.log("efter skapande är timeslots: ", Object.values(this.timeslots))
     
     return Object.values(this.timeslots);
 }

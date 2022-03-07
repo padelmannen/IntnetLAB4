@@ -5,7 +5,7 @@
       <label for="timetable" class="form-label h4">Available times:</label>
         <button
           v-for="timeslot in timeslots"
-          :key="timeslot.id"
+          :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
           @click="bookTime(timeslot.time)"
