@@ -4,13 +4,13 @@
     <div class="col list-group">
       <label for="timetable" class="form-label h4">Available times:</label>
         <button
-          v-for="room in rooms"
-          :key="room.time"
+          v-for="timeslot in timeslots"
+          :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
-          @click="bookTime(room.time)"
+          @click="bookTime(timeslot.time)"
         >
-          {{ room.time }}
+          {{ timeslot.time }}
         </button>
       </div>
     <div class="col"></div>
@@ -18,8 +18,9 @@
       <div class="col"></div>
       <Confirm
         v-if="showConfirmWindow"
+        :time="curTimePressed"
+        @close="() => closeConfirmWindow()"
       />
-      <!-- behöver nog använda props för att skicka in rätt tid -->
     </div>
     <div class="col"></div>
   </div>
@@ -37,29 +38,33 @@ export default {
 
   data: () => ({
     username: "",
-    rooms: [],
+    timeslots: [],
     showConfirmWindow: false,
     curTimePressed: "",
   }),
   created() {
-    fetch("/api/rooms")
+    fetch("/api/timeslots")
       .then((res) => res.json())
-      .then(({ rooms }) => {
-        this.rooms = rooms;
+      .then(({ timeslots }) => {
+        this.timeslots = timeslots;
       })
       .catch(console.error);
   },
   methods: {
     bookTime(time) {
       console.log("time pressed")
-      this.showConfirmWindow = true
       this.curTimePressed = time;
+      this.showConfirmWindow = true
 
       //this.$router.push(`/confirm`);
 
-
       //alert("TID VALD: "+ time);
     },
+
+    closeConfirmWindow(){
+      this.showConfirmWindow = false;
+    },
+
     authenticate() {
       const { commit } = this.$store;
       const { push } = this.$router;
@@ -72,8 +77,8 @@ export default {
         .then((res) => res.json())
         .then(({ authenticated }) => {
           commit("setAuthenticated", authenticated);
-          push(authenticated === true ? "/rooms" : "/booking");
-        })
+          push(authenticated === true ? "/timeslots" : "/booking");
+        })//denna är helt fel!
         .catch(console.error);
     },
   },
