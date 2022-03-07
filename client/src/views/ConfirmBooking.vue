@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <form class="col" @submit.prevent="authenticate()">
+    <form class="col" @submit.prevent="book()">
       <label for="username" class="form-label h4">Fill in name and confirm:</label>
       <p>Time: {{time}}</p>
       <input
@@ -14,6 +14,11 @@
         autofocus
       />
       <button type="submit" class="btn btn-dark mt-4 float-end">Confirm</button>
+      <button
+        class="btn btn-dark mt-4 float-start"
+        @click="$emit('close')"
+        >Cancel
+    </button>
     </form>
     <div class="col"></div>
   </div>
@@ -39,6 +44,11 @@ export default {
   }),
   
   methods: {
+
+    book(){
+        //funktion som ska göra en tid bokad
+        this.$emit("close")
+    },
     authenticate() {
       const { commit } = this.$store;
       const { push } = this.$router;

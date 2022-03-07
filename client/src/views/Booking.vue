@@ -19,6 +19,7 @@
       <Confirm
         v-if="showConfirmWindow"
         :time="curTimePressed"
+        @close="() => closeConfirmWindow()"
       />
       <!-- behöver nog använda props för att skicka in rätt tid -->
     </div>
@@ -55,13 +56,17 @@ export default {
       console.log("time pressed")
       this.curTimePressed = time;
       this.showConfirmWindow = true
-      
+      timeslots[time].
 
       //this.$router.push(`/confirm`);
 
-
       //alert("TID VALD: "+ time);
     },
+
+    closeConfirmWindow(){
+      this.showConfirmWindow = false;
+    },
+
     authenticate() {
       const { commit } = this.$store;
       const { push } = this.$router;
