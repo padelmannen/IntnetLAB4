@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "language-stylus": "^3.2.0",
-    "sass": "^1.49.9"
+    "sass": "^1.49.9",
+    "sqlite": "^4.0.25",
+    "sqlite3": "^5.0.2"
   }
 }

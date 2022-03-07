@@ -1,9 +1,14 @@
 /**
- * @class timeslot
+ * @class Timeslot
  */
- class timeslot {
-    constructor(time) {
+ class Timeslot {
+    constructor(assistantID, id, time, status, bookedBy, reservedBy) {
+      this.assistantID = assistantID;
+      this.id = id;
       this.time = time;
+      this.status = status;
+      this.bookedBy = bookedBy;
+      this.reservedBy = reservedBy;
       this.messages = [];
     }
   
@@ -17,5 +22,5 @@
     }
   }
   
-  export default timeslot;
+  export default Timeslot;
   

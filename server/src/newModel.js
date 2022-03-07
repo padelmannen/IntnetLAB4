@@ -1,6 +1,7 @@
 import Room from "./models/room.model.js";
 import User from "./models/user.model.js";
-import timeslot from "./models/timeslot.model.js";
+import Timeslot from "./models/timeslot.model.js";
+import db from "./database.js";
 
 class Model {
   constructor() {
@@ -24,8 +25,9 @@ class Model {
    * @param {String} time - The name of the room.
    * @returns {void}
    */
-  createTimeSlot(time) {
-    this.timeslots[time] = new timeslot(time);
+  createTimeSlot(assistantID, id, time, status, bookedBy, reservedBy) {
+    console.log("creatar timeslot")
+    this.timeslots[id] = new Timeslot(assistantID, id, time, status, bookedBy, reservedBy);
   }
 
   /**
@@ -41,9 +43,27 @@ class Model {
    * Return all the rooms.
    * @returns {timeslot[]}
    */
-  getTimeSlots() {
+  // getTimeSlots() {
+  //   return Object.values(this.timeslots);
+  // }
+  async getTimeSlots() {
+    console.log("goes into this.timeslots");
+    let sql = "SELECT * FROM timeSlots"
+    await db.each(sql, [], (err, row) => {
+      if (err) {
+        console.log("error")
+        throw err;
+      }
+      else{
+        console.log("skapar timeSlot: ", row, row.id)
+        this.createTimeSlot(row.assistantID, row.id, row.time, row.status, row.bookedBy, row.reservedBy)
+      }
+    });
+
+    console.log("efter skapande är timeslots: ", this.timeslots)
+    
     return Object.values(this.timeslots);
-  }
+}
 
   /**
    * Create a user with the given name.
