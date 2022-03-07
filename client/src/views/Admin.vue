@@ -36,7 +36,7 @@
         :time="curTimePressed"
         @close="() => closeConfigWindow()"
       />
-    <Add
+      <Add
         v-if="showAddWindow"
         @close="() => closeAddWindow()"
       />
