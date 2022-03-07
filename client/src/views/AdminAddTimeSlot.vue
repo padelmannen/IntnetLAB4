@@ -1,24 +1,24 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <form class="col" @submit.prevent="book()">
-      <label for="username" class="form-label h4">Fill in name and confirm:</label>
-      <p>Time: {{time}}</p>
+    <form class="col" @submit.prevent="removeTimeSlot()">
+      <label for="username" class="form-label h4">Add Time Slot</label>
       <input
         id="username"
         v-model="username"
         type="text"
         class="form-control"
-        placeholder="Name"
+        placeholder="Time"
         required
         autofocus
       />
-      <button type="submit" class="btn btn-dark mt-4 float-end">Confirm</button>
+      <button type="submit" class="btn btn-dark mt-4 float-end">Add</button>
       <button
         class="btn btn-dark mt-4 float-start"
         @click="$emit('close')"
-        >Cancel
-    </button>
+        >
+          Cancel
+      </button>
     </form>
     <div class="col"></div>
   </div>
@@ -33,10 +33,6 @@
 export default {
   name: "configTimeSlotView",
   components: {},
-  
-  props: {
-    time: String,
-  },
 
   data: () => ({
     username: "",
@@ -45,8 +41,8 @@ export default {
   
   methods: {
 
-    book(){
-        //funktion som ska göra en tid bokad
+    removeTimeSlot(){
+        //funktion som ska ta bort en tid
         this.$emit("close")
     },
     authenticate() {

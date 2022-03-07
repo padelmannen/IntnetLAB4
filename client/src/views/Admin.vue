@@ -15,7 +15,7 @@
         <button
           type="button"
           class="btn btn-dark mt-4 float-end"
-          @click="logout()"
+          @click="addTimeSlot()"
         >
           Add Time Slot
         </button>
@@ -31,10 +31,14 @@
     <div class="col"></div>
     <div class="row">
       <div class="col"></div>
-      <Confirm
+      <Configure
         v-if="showConfigWindow"
         :time="curTimePressed"
         @close="() => closeConfigWindow()"
+      />
+    <Add
+        v-if="showAddWindow"
+        @close="() => closeAddWindow()"
       />
       <!-- behöver nog använda props för att skicka in rätt tid -->
     </div>
@@ -43,13 +47,20 @@
 </template>
 
 <script>
+import Configure from "./AdminRemoveTimeSlot.vue";
+import Add from "./AdminAddTimeSlot.vue";
+
 export default {
   name: "AdminView",
-  components: {},
+  components: {
+      Configure,
+      Add,
+  },
   data: () => ({
     username: "",
     timeslots: [],
     showConfigWindow: false,
+    showAddWindow: false,
     curTimePressed: "",
   }),
   created() {
@@ -61,19 +72,32 @@ export default {
       .catch(console.error);
   },
   methods: {
-    configTimeSlot(time) {
-      //this.$router.push(`/rooms/${name}`);
-      console.log("time pressed")
-      this.curTimePressed = time;
-      this.showConfigWindow = true
-      //alert("TID VALD: "+ time);
-    },
     logout() {
       //this.$router.push(`/rooms/${name}`);
       alert("Tried to logout!");
     },
+    configTimeSlot(time) {
+      //this.$router.push(`/rooms/${name}`);
+      console.log("time pressed")
+      this.closeAddWindow();
+      this.curTimePressed = time;
+      this.showConfigWindow = true;
+      //alert("TID VALD: "+ time);
+    },
     closeConfigWindow(){
-        this.$emit("close")
+        console.log("close configure window")
+        this.showConfigWindow = false;
+    },
+    addTimeSlot() {
+      //this.$router.push(`/rooms/${name}`);
+      console.log("add time slot")
+      this.closeConfigWindow();
+      this.showAddWindow = true;
+      //alert("TID VALD: "+ time);
+    },
+    closeAddWindow(){
+        console.log("close add window")
+        this.showAddWindow = false;
     },
     authenticate() {
       const { commit } = this.$store;
