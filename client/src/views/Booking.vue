@@ -56,7 +56,6 @@ export default {
       console.log("time pressed")
       this.curTimePressed = time;
       this.showConfirmWindow = true
-      timeslots[time].
 
       //this.$router.push(`/confirm`);
 
