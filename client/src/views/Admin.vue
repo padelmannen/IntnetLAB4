@@ -4,13 +4,13 @@
     <div class="col list-group">
       <label for="timetable" class="form-label h4">This is the admin page!</label>
         <button
-          v-for="room in rooms"
-          :key="room.time"
+          v-for="timeslot in timeslots"
+          :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
-          @click="bookTime(room.time)"
+          @click="bookTime(timeslot.time)"
         >
-          {{ room.time }}
+          {{ timeslot.time }}
         </button>
         <button
           type="button"
@@ -31,13 +31,13 @@ export default {
   components: {},
   data: () => ({
     username: "",
-    rooms: [],
+    timeslots: [],
   }),
   created() {
-    fetch("/api/rooms")
+    fetch("/api/timeslots")
       .then((res) => res.json())
-      .then(({ rooms }) => {
-        this.rooms = rooms;
+      .then(({ timeslots }) => {
+        this.timeslots = timeslots;
       })
       .catch(console.error);
   },
@@ -62,8 +62,8 @@ export default {
         .then((res) => res.json())
         .then(({ authenticated }) => {
           commit("setAuthenticated", authenticated);
-          push(authenticated === true ? "/rooms" : "/booking");
-        })
+          push(authenticated === true ? "/timeslots" : "/booking");
+        })//denna är helt fel!
         .catch(console.error);
     },
   },

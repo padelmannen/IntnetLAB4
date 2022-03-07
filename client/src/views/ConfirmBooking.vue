@@ -3,7 +3,7 @@
     <div class="col"></div>
     <form class="col" @submit.prevent="authenticate()">
       <label for="username" class="form-label h4">Fill in name and confirm:</label>
-      <p>Time:</p>
+      <p>Time: {{time}}</p>
       <input
         id="username"
         v-model="username"
@@ -28,11 +28,16 @@
 export default {
   name: "confirmBookingView",
   components: {},
+  
+  props: {
+    time: String,
+  },
 
   data: () => ({
     username: "",
     open: false,
   }),
+  
   methods: {
     authenticate() {
       const { commit } = this.$store;
