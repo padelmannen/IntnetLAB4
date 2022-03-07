@@ -8,9 +8,16 @@
           :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
-          @click="bookTime(timeslot.time)"
+          @click="configTimeSlot(timeslot.time)"
         >
           {{ timeslot.time }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-dark mt-4 float-end"
+          @click="logout()"
+        >
+          Add Time Slot
         </button>
         <button
           type="button"
@@ -22,6 +29,16 @@
         
       </div>
     <div class="col"></div>
+    <div class="row">
+      <div class="col"></div>
+      <Confirm
+        v-if="showConfigWindow"
+        :time="curTimePressed"
+        @close="() => closeConfigWindow()"
+      />
+      <!-- behöver nog använda props för att skicka in rätt tid -->
+    </div>
+    <div class="col"></div>
   </div>
 </template>
 
@@ -32,6 +49,8 @@ export default {
   data: () => ({
     username: "",
     timeslots: [],
+    showConfigWindow: false,
+    curTimePressed: "",
   }),
   created() {
     fetch("/api/timeslots")
@@ -42,13 +61,19 @@ export default {
       .catch(console.error);
   },
   methods: {
-    bookTime(time) {
+    configTimeSlot(time) {
       //this.$router.push(`/rooms/${name}`);
-      alert("TID VALD: "+ time);
+      console.log("time pressed")
+      this.curTimePressed = time;
+      this.showConfigWindow = true
+      //alert("TID VALD: "+ time);
     },
     logout() {
       //this.$router.push(`/rooms/${name}`);
       alert("Tried to logout!");
+    },
+    closeConfigWindow(){
+        this.$emit("close")
     },
     authenticate() {
       const { commit } = this.$store;

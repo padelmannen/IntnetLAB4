@@ -21,7 +21,6 @@
         :time="curTimePressed"
         @close="() => closeConfirmWindow()"
       />
-      <!-- behöver nog använda props för att skicka in rätt tid -->
     </div>
     <div class="col"></div>
   </div>
