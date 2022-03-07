@@ -75,7 +75,7 @@ export default {
     logout() {
       //this.$router.push(`/rooms/${name}`);
       //alert("Tried to logout!");
-      const { commit } = this.$store;xw
+      const { commit } = this.$store;
       const { push } = this.$router;
 
       fetch("/api/booking", {
@@ -89,7 +89,6 @@ export default {
           push(false === true ? "/timeslots" : "/booking");
         })
         .catch(console.error);
-      
 
     },
     configTimeSlot(time) {
