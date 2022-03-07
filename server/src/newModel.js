@@ -42,6 +42,7 @@ class Model {
    * @returns {timeslot[]}
    */
   getTimeSlots() {
+    console.log(Object.values(this.timeslots))
     return Object.values(this.timeslots);
   }
 
