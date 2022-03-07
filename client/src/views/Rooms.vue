@@ -33,7 +33,9 @@ export default {
   },
   methods: {
     redirect(name) {
+      console.log("clickad rum")
       this.$router.push(`/rooms/${name}`);
+      
     },
   },
 };

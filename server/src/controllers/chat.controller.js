@@ -16,6 +16,7 @@ const router = Router();
  */
 
 router.get("/rooms", (req, res) => {
+  console.log("router rooms")
   const rooms = model.getRooms();
 
   // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
@@ -23,7 +24,10 @@ router.get("/rooms", (req, res) => {
 });
 
 router.get("/timeSlots", (req, res) => {
+  console.log("router timeSlots")
+
   const timeSlots = model.getTimeSlots();
+
 
   // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
   res.status(200).json({ timeSlots }); // same as { rooms: rooms }

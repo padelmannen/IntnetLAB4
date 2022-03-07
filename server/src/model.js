@@ -54,6 +54,11 @@ class Model {
     return Object.values(this.rooms);
   }
 
+  /**
+   * Return all the rooms.
+   * @returns {TimeSlot[]}
+   */
+
   getTimeSlots(){
     console.log("hämtar timeslots")
 
