@@ -8,7 +8,7 @@
           :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
-          @click="bookTime(timeslot.time)"
+          @click="bookTime(timeslot.id)"
         >
           {{ timeslot.time }}
         </button>
@@ -46,7 +46,9 @@ export default {
     fetch("/api/timeslots")
       .then((res) => res.json())
       .then(({ timeslots }) => {
+        console.log(timeslots)
         this.timeslots = timeslots;
+        
       })
       .catch(console.error);
   },

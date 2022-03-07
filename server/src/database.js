@@ -25,7 +25,7 @@ export default await (async () => {
 
   await db.run("DROP TABLE IF EXISTS timeSlots");
   await db.run(
-    "CREATE TABLE timeSlots (assistantId TEXT, id TEXT PRIMARY KEY, time TEXT, status TEXT, bookedBy TEXT, reservedBy TEXT, FOREIGN KEY(assistantID) REFERENCES assistants(assistantID))"
+    "CREATE TABLE timeSlots (assistantID TEXT, id TEXT PRIMARY KEY, time TEXT, status TEXT, bookedBy TEXT, reservedBy TEXT, FOREIGN KEY(assistantID) REFERENCES assistants(assistantID))"
   );
   // Lägger in en admin redan
   const statement1 = await db.prepare("INSERT INTO assistants VALUES (?,?)");

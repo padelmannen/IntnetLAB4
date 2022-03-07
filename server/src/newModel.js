@@ -26,7 +26,7 @@ class Model {
    * @returns {void}
    */
   createTimeSlot(assistantID, id, time, status, bookedBy, reservedBy) {
-    console.log("creatar timeslot")
+    // console.log("creatar timeslot")
     this.timeslots[id] = new Timeslot(assistantID, id, time, status, bookedBy, reservedBy);
   }
 
@@ -55,12 +55,12 @@ class Model {
         throw err;
       }
       else{
-        console.log("skapar timeSlot: ", row, row.id)
+        // console.log("skapar timeSlot: ", row, row.id)
         this.createTimeSlot(row.assistantID, row.id, row.time, row.status, row.bookedBy, row.reservedBy)
       }
     });
 
-    console.log("efter skapande är timeslots: ", Object.values(this.timeslots))
+    // console.log("efter skapande är timeslots: ", Object.values(this.timeslots))
     
     return Object.values(this.timeslots);
 }
