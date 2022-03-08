@@ -1,9 +1,9 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <form class="col" @submit.prevent="book()">
+    <form class="col" @submit.prevent="book(timeSlotID)">
       <label for="username" class="form-label h4">Fill in name and confirm:</label>
-      <p>Time: {{time}}</p>
+      <p>Time: {{timeSlotID}}</p>
       <input
         id="username"
         v-model="username"
@@ -35,35 +35,41 @@ export default {
   components: {},
   
   props: {
-    time: String,
+    timeSlotID: String,
   },
 
   data: () => ({
     username: "",
+    // timeslotID: "",
     open: false,
   }),
   
   methods: {
 
-    book(){
+    book(timeSlotID){
+      console.log("tsID: ", timeSlotID)
         //funktion som ska göra en tid bokad
-        this.$emit("close")
-    },
-    authenticate() {
-      const { commit } = this.$store;
-      const { push } = this.$router;
+       
+    // },
+    // authenticate() {
+    //   const { commit } = this.$store;
+    //   const { push } = this.$router;
 
       fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: this.username }),
+        body: JSON.stringify({ username: this.username, timeSlotID: timeSlotID}),
       })
         .then((res) => res.json())
-        .then(({ authenticated }) => {
-          commit("setAuthenticated", authenticated);
-          push(authenticated === true ? "/admin" : "/booking");
+        .then(() => {
+          this.$emit("close")
+        // .then(({ authenticated }) => {
+        //   commit("setAuthenticated", authenticated);
+        //   push(authenticated === true ? "/admin" : "/booking");
+        // })
         })
         .catch(console.error);
+         
     },
   },
 };

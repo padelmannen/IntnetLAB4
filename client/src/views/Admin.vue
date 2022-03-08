@@ -75,20 +75,13 @@ export default {
     logout() {
       //this.$router.push(`/rooms/${name}`);
       //alert("Tried to logout!");
-      const { commit } = this.$store;xw
+      const { commit } = this.$store;
       const { push } = this.$router;
-
-      fetch("/api/booking", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: this.username }),
+      this.$store.commit("setAuthenticated", false);
+      this.$router.push({
+            path: "adminlogin",
       })
-        .then((res) => res.json())
-        .then(({ authenticated }) => {
-          commit("setAuthenticated", false);
-          push(false === true ? "/timeslots" : "/booking");
-        })
-        .catch(console.error);
+     .catch(console.error)
       
 
     },

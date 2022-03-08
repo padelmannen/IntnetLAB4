@@ -22,6 +22,20 @@ router.get("/timeslots", async (req, res) => {
   res.status(200).json({ timeslots }); // same as { rooms: rooms }
 });
 
+router.post("/booking", async (req, res) => {
+  /* console.log('bookername: ', req.body.bookerName);
+    console.log('id: ', bookedSlot); */
+
+  // const { socketID } = req.session;
+  // model.join(socketID, "/start");
+
+  await model.bookTimeSlot(req.body.timeslotID, req.body.username);
+
+  // måste typ lägga in status ok här
+
+  res.status(200).json({ authenticated: true });
+});
+
 router.get("/timeslots/:name/messages", (req, res) => {
   // Check how to access data being sent as a path, query, header and cookie parameter or in the HTTP request body.
   const { time } = req.params;
