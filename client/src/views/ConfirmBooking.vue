@@ -3,7 +3,10 @@
     <div class="col"></div>
     <form class="col" @submit.prevent="book()">
       <label for="username" class="form-label h4">Fill in name and confirm:</label>
-      <p>Time: {{time}}</p>
+      <p>Time Slot: {{time}}</p>
+      <div>
+        Time left to confirm: {{ ((duration - elapsed) / 1000).toFixed(0) }} seconds
+      </div>
       <input
         id="username"
         v-model="username"
@@ -16,7 +19,7 @@
       <button type="submit" class="btn btn-dark mt-4 float-end">Confirm</button>
       <button
         class="btn btn-dark mt-4 float-start"
-        @click="$emit('close')"
+        @click="closeWindow()"
         >Cancel
     </button>
     </form>
@@ -36,18 +39,45 @@ export default {
   
   props: {
     time: String,
+    //elapsed: Number,
   },
 
   data: () => ({
     username: "",
     open: false,
+    duration: 20*1000,
+    elapsed: 0,
+    windowOpen: true,
   }),
-  
+  created() {
+    this.elapsed = 0
+    console.log("created and elapsed reset!")
+    
+    let lastTime = performance.now()
+    const update = () => {
+
+      const curTime = performance.now()
+      this.elapsed += Math.min(curTime - lastTime, this.duration - this.elapsed)
+      console.log(this.elapsed)
+      lastTime = curTime
+      if(this.duration !== this.elapsed && this.windowOpen){
+        this.handle = requestAnimationFrame(update)
+      }
+      else{
+        this.closeWindow();
+      }
+    }
+    update()
+  },
   methods: {
 
     book(){
         //funktion som ska göra en tid bokad
-        this.$emit("close")
+        this.closeWindow();
+    },
+    closeWindow(){
+      this.windowOpen = false;
+      this.$emit("close");
     },
     authenticate() {
       const { commit } = this.$store;

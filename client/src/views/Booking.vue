@@ -60,7 +60,6 @@ export default {
 
       //alert("TID VALD: "+ time);
     },
-
     closeConfirmWindow(){
       this.showConfirmWindow = false;
     },

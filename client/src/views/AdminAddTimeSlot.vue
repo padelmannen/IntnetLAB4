@@ -3,6 +3,10 @@
     <div class="col"></div>
     <form class="col" @submit.prevent="removeTimeSlot()">
       <label for="username" class="form-label h4">Add Time Slot</label>
+      <VueTimepicker
+        id="timepicker"
+        v-model="timePicked"
+      />
       <input
         id="username"
         v-model="username"
@@ -28,19 +32,20 @@
 //för timer
 //https://vuejs.org/examples/#timer
 
-
+import VueTimepicker from 'vue2-timepicker'
 
 export default {
   name: "configTimeSlotView",
-  components: {},
+  components: {
+    VueTimepicker
+  },
 
   data: () => ({
     username: "",
     open: false,
+    timePicked:"",
   }),
-  
   methods: {
-
     removeTimeSlot(){
         //funktion som ska ta bort en tid
         this.$emit("close")
