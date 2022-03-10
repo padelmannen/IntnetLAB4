@@ -8,7 +8,7 @@
           :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
-          @click="bookTime(timeslot.time)"
+          @click="bookTime(timeslot.id)"
         >
           {{ timeslot.time }}
         </button>
@@ -18,7 +18,7 @@
       <div class="col"></div>
       <Confirm
         v-if="showConfirmWindow"
-        :time="curTimePressed"
+        :timeSlotID="timeSlotID"
         @close="() => closeConfirmWindow()"
       />
     </div>
@@ -40,22 +40,22 @@ export default {
     username: "",
     timeslots: [],
     showConfirmWindow: false,
-    curTimePressed: "",
+    timeSlotID: ""
   }),
   created() {
     fetch("/api/timeslots")
       .then((res) => res.json())
       .then(({ timeslots }) => {
+        console.log(timeslots)
         this.timeslots = timeslots;
       })
       .catch(console.error);
   },
   methods: {
-    bookTime(time) {
+    bookTime(timeSlotID) {
       console.log("time pressed")
-      this.curTimePressed = time;
+      this.timeSlotID = timeSlotID
       this.showConfirmWindow = true
-
       //this.$router.push(`/confirm`);
 
       //alert("TID VALD: "+ time);

@@ -15,7 +15,7 @@
       <input
         id="password"
         v-model="password"
-        type="text"
+        type="password"
         class="form-control"
         placeholder="Password"
         required
@@ -33,23 +33,37 @@ export default {
   components: {},
   data: () => ({
     username: "",
+    password: ""
   }),
   methods: {
     authenticate() {
       const { commit } = this.$store;
       const { push } = this.$router;
 
-      fetch("/api/booking", {
+      fetch("/api/checkLogin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: this.username }),
+        body: JSON.stringify({ username: this.username, password: this.password }),
       })
-        .then((res) => res.json())
-        .then(({ authenticated }) => {
-          commit("setAuthenticated", authenticated);
-          push(authenticated === true ? "/admin" : "/booking");
-        })
-        .catch(console.error);
+       .then((resp) => {
+          if (resp.ok){
+            this.$store.commit("setAuthenticated", true);
+            this.$router.push({
+            path: "admin",
+            })
+          }
+          else{
+            this.$store.commit("setAuthenticated", false);
+            this.username = "";
+            this.password = "";
+          }
+       })
+        .catch((error) => {
+          // Ändrar inte datan här - måste jag sätta upp mutationen i store kankse?
+          this.loginFail = true;
+
+          console.info("Could not log in.", error);
+        });
     },
   },
 };

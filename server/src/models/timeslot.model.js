@@ -1,9 +1,14 @@
 /**
- * @class timeslot
+ * @class Timeslot
  */
  class timeslot {
-    constructor(time) {
+    constructor(assistantID, id, time, status, bookedBy, reservedBy) {
+      this.assistantID = assistantID;
+      this.id = id;
       this.time = time;
+      this.status = status;
+      this.bookedBy = bookedBy;
+      this.reservedBy = reservedBy;
       this.messages = [];
     }
   

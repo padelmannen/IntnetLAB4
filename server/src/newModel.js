@@ -1,6 +1,7 @@
 import Room from "./models/room.model.js";
 import User from "./models/user.model.js";
-import timeslot from "./models/timeslot.model.js";
+import Timeslot from "./models/timeslot.model.js";
+import db from "./database.js";
 
 class Model {
   constructor() {
@@ -24,8 +25,9 @@ class Model {
    * @param {String} time - The name of the room.
    * @returns {void}
    */
-  createTimeSlot(time) {
-    this.timeslots[time] = new timeslot(time);
+  createTimeSlot(assistantID, id, time, status, bookedBy, reservedBy) {
+    // console.log("creatar timeslot")
+    this.timeslots[id] = new Timeslot(assistantID, id, time, status, bookedBy, reservedBy);
   }
 
   /**
@@ -41,10 +43,63 @@ class Model {
    * Return all the rooms.
    * @returns {timeslot[]}
    */
-  getTimeSlots() {
-    console.log("efter skapande är timeSLots: ", Object.values(this.timeslots))
-    return Object.values(this.timeslots);
+  // getTimeSlots() {
+  //   return Object.values(this.timeslots);
+  // }
+
+  async checkLogin(username, password){
+    console.log("username: ", username)
+    console.log("password:", password)
+    
+    const sql =(`SELECT * from assistants WHERE assistantID= ? AND password = ?`, username, password)
+    const acceptedLogin = await db.get(`SELECT * from assistants WHERE assistantID= ? AND password = ?`, username, password);
+    if (acceptedLogin){
+      console.log("Godkänt login")
+      return true;
+    }
+    console.log("EJ Godkänt login")
+    return false;  
   }
+
+  async bookTimeSlot(username, id) {
+    /* const theBooked = this.findTimeslotByID(id);
+        console.log(theBooked);
+        theBooked.addStatus("booked");
+        theBooked.addBookedBy(bookerName);
+        console.log(theBooked.bookedBy, "är här");
+        */
+
+    // console.log(userName);
+    console.log("username: ", username)
+    console.log("id:", id)
+
+    const statement1 = await db.prepare(
+        `UPDATE timeSlots SET bookedBy=?, status=? WHERE id= ?`
+    );
+    statement1.run(username, "booked", id);
+    statement1.finalize();
+    this.io.emit("book", id, username);
+}
+
+  async getTimeSlots() {
+    console.log("goes into this.timeslots");
+    let sql = "SELECT * FROM timeSlots"
+    await db.each(sql, [], (err, row) => {
+      if (err) {
+        console.log("error")
+        throw err;
+      }
+      else{
+        // console.log("skapar timeSlot: ", row, row.id)
+        this.createTimeSlot(row.assistantID, row.id, row.time, row.status, row.bookedBy, row.reservedBy)
+      }
+    });
+
+    // console.log("efter skapande är timeslots: ", Object.values(this.timeslots))
+    console.log(Object.values(this.timeslots))
+    
+    return Object.values(this.timeslots);
+}
 
   /**
    * Create a user with the given name.

@@ -1,9 +1,9 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <form class="col" @submit.prevent="book()">
+    <form class="col" @submit.prevent="book(timeSlotID)">
       <label for="username" class="form-label h4">Fill in name and confirm:</label>
-      <p>Time Slot: {{time}}</p>
+      <p>Time: {{timeSlotID}}</p>
       <div>
         Time left to confirm: {{ ((duration - elapsed) / 1000).toFixed(0) }} seconds
       </div>
@@ -38,12 +38,12 @@ export default {
   components: {},
   
   props: {
-    time: String,
-    //elapsed: Number,
+    timeSlotID: String,
   },
 
   data: () => ({
     username: "",
+    // timeslotID: "",
     open: false,
     duration: 20*1000,
     elapsed: 0,
@@ -70,11 +70,6 @@ export default {
     update()
   },
   methods: {
-
-    book(){
-        //funktion som ska göra en tid bokad
-        this.closeWindow();
-    },
     closeWindow(){
       this.windowOpen = false;
       this.$emit("close");
@@ -82,18 +77,26 @@ export default {
     authenticate() {
       const { commit } = this.$store;
       const { push } = this.$router;
-
+    },
+    book(timeSlotID){
+      console.log("tsID: ", timeSlotID)
+        //funktion som ska göra en tid bokad
+        
       fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: this.username }),
+        body: JSON.stringify({ username: this.username, timeSlotID: timeSlotID}),
       })
         .then((res) => res.json())
-        .then(({ authenticated }) => {
-          commit("setAuthenticated", authenticated);
-          push(authenticated === true ? "/admin" : "/booking");
+        .then(() => {
+          this.$emit("close")
+        // .then(({ authenticated }) => {
+        //   commit("setAuthenticated", authenticated);
+        //   push(authenticated === true ? "/admin" : "/booking");
+        // })
         })
         .catch(console.error);
+         
     },
   },
 };

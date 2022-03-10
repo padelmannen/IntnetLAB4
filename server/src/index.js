@@ -61,15 +61,21 @@ io.use(
 
 // Bind REST controllers to /api/*.
 app.use("/api", auth.router);
+app.use("/api", chat.router);
+
 // All chat endpoints require the user to be authenticated.
 app.use("/api", auth.requireAuth, chat.router);
 
 // Initialize model.
 model.init(io);
+// model.getTimeSlots();
+// model.createTimeSlot("08:00");
 model.createTimeSlot("08:00");
 model.createTimeSlot("12:00");
 model.createTimeSlot("16:00");
 model.createTimeSlot("20:00");
+// model.createTimeSlot("16:00");
+// model.createTimeSlot("20:00");
 
 // Handle socket.io connections.
 io.on("connection", (socket) => {

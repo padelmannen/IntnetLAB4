@@ -15,11 +15,25 @@ const router = Router();
  * etc.
  */
 
-router.get("/timeslots", (req, res) => {
-  const timeslots = model.getTimeSlots();
+router.get("/timeslots", async (req, res) => {
+  const timeslots = await model.getTimeSlots();
 
   // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
   res.status(200).json({ timeslots }); // same as { rooms: rooms }
+});
+
+router.post("/booking", async (req, res) => {
+  /* console.log('bookername: ', req.body.bookerName);
+    console.log('id: ', bookedSlot); */
+
+  // const { socketID } = req.session;
+  // model.join(socketID, "/start");
+
+  await model.bookTimeSlot(req.body.timeslotID, req.body.username);
+
+  // måste typ lägga in status ok här
+
+  res.status(200).json({ authenticated: true });
 });
 
 router.get("/timeslots/:name/messages", (req, res) => {
