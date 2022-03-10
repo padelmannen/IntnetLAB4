@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col"></div>
     <div class="col list-group">
-      <label for="timetable" class="form-label h4">Welcome username!</label>
+      <label for="timetable" class="form-label h4">Welcome {{assistant}}!</label>
         <button
           v-for="timeslot in timeslots"
           :key="timeslot.time"
@@ -57,7 +57,7 @@ export default {
       Add,
   },
   data: () => ({
-    username: "",
+    assistant: "",
     timeslots: [],
     showConfigWindow: false,
     showAddWindow: false,
@@ -70,6 +70,7 @@ export default {
         this.timeslots = timeslots;
       })
       .catch(console.error);
+      console.log(this.username)
   },
   methods: {
     logout() {

@@ -38,16 +38,16 @@ export default await (async () => {
   );
   statement2.run(
     "mikolaj",
-    "mikolaj 1a mars 14:30",
-    "1a mars 14:30",
+    "mikolaj 2022-03-01 14:30",
+    "2022-03-01 14:30",
     "available",
     "", 
     ""
   );
   statement2.run(
     "vahid",
-    "vahid 2a mars 15:00",
-    "2a mars 15:00",
+    "vahid 2022-03-02 15:00",
+    "2022-03-02 15:00",
     "available",
     "",
     ""
