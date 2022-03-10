@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col"></div>
     <div class="col list-group">
-      <label for="timetable" class="form-label h4">This is the admin page!</label>
+      <label for="timetable" class="form-label h4">Welcome username!</label>
         <button
           v-for="timeslot in timeslots"
           :key="timeslot.time"
