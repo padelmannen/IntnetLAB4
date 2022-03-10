@@ -70,10 +70,7 @@ app.use("/api", auth.requireAuth, chat.router);
 model.init(io);
 // model.getTimeSlots();
 // model.createTimeSlot("08:00");
-model.createTimeSlot("08:00");
-model.createTimeSlot("12:00");
-model.createTimeSlot("16:00");
-model.createTimeSlot("20:00");
+// model.createTimeSlot("12:00");
 // model.createTimeSlot("16:00");
 // model.createTimeSlot("20:00");
 
