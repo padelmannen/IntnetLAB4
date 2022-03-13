@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <form class="col" @submit.prevent="removeTimeSlot()">
+    <form class="col" @submit.prevent="addTimeSlot()">
       <label for="username" class="form-label h4">Add Time Slot</label>
       <input
         id="datepicked"
@@ -49,7 +49,8 @@ export default {
     timepicked:"",
   }),
   methods: {
-    removeTimeSlot(){
+    addTimeSlot(){
+        
         //funktion som ska ta bort en tid
         this.$emit("close")
     },

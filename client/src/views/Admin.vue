@@ -4,7 +4,7 @@
     <div class="col list-group">
       <label for="timetable" class="form-label h4">Welcome {{assistant}}!</label>
         <button
-          v-for="timeslot in timeslots"
+          v-for="timeslot in assistantTimeSlots()"
           :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
@@ -26,7 +26,7 @@
         >
           Logout
         </button>
-        
+        <div class="row"></div>
       </div>
     <div class="col"></div>
     <div class="row">
@@ -64,15 +64,24 @@ export default {
     curTimePressed: "",
   }),
   created() {
+    this.assistant = this.$route.params.name;
     fetch("/api/timeslots")
       .then((res) => res.json())
       .then(({ timeslots }) => {
         this.timeslots = timeslots;
       })
       .catch(console.error);
-      console.log(this.username)
   },
   methods: {
+    assistantTimeSlots(){
+      const myTimeSlots = [];
+      for(var timeslot in this.timeslots){
+        if(this.timeslots[timeslot].assistantID === this.assistant){
+          myTimeSlots.push(this.timeslots[timeslot])
+        }
+      }
+      return myTimeSlots
+    },
     logout() {
       //this.$router.push(`/rooms/${name}`);
       //alert("Tried to logout!");

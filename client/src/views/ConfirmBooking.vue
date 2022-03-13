@@ -58,7 +58,7 @@ export default {
 
       const curTime = performance.now()
       this.elapsed += Math.min(curTime - lastTime, this.duration - this.elapsed)
-      console.log(this.elapsed)
+      //console.log(this.elapsed)
       lastTime = curTime
       if(this.duration !== this.elapsed && this.windowOpen){
         this.handle = requestAnimationFrame(update)

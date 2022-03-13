@@ -30,7 +30,7 @@ const routes = [
     component: AdminLogin,
   },
   {
-    path: "/admin",
+    path: "/admin:name",
     component: Admin,
   },
   {

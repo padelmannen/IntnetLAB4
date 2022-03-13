@@ -49,7 +49,7 @@ export default {
           if (resp.ok){
             this.$store.commit("setAuthenticated", true);
             this.$router.push({
-            path: "admin",
+            path: "/admin"+this.username,
             })
           }
           else{

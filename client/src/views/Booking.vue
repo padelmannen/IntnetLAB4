@@ -12,6 +12,7 @@
         >
           {{ timeslot.time }}
         </button>
+        <div class="row"></div>
       </div>
     <div class="col"></div>
     <div class="row">
@@ -50,6 +51,13 @@ export default {
         this.timeslots = timeslots;
       })
       .catch(console.error);
+
+    //color buttons depending on status
+    for(const timeslot in this.timeslots){
+      const curTimeSlot = this.timeslots[timeslot]
+      //kolla om curTimeSlot är bokad
+      //om bokad, lägga till CSS element background-color
+    }
   },
   methods: {
     bookTime(timeSlotID) {
@@ -83,3 +91,24 @@ export default {
   },
 };
 </script>
+<style>
+button {
+  border-radius: 12px;
+
+
+  /* display: inline-block;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: inherit; */
+}
+button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+</style>
