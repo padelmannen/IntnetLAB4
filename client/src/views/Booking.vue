@@ -5,9 +5,11 @@
       <label for="timetable" class="form-label h4">Available times:</label>
         <button
           v-for="timeslot in timeslots"
+          v-bind:class="timeslot.status"
           :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
+          ng-class="{'pending':row.status === 'Pending'}, 'completed':row.status ==="
           @click="bookTime(timeslot.id)"
         >
           {{ timeslot.time }}
@@ -19,7 +21,7 @@
       <div class="col"></div>
       <Confirm
         v-if="showConfirmWindow"
-        :timeSlotID="timeSlotID"
+        :timeslotID="timeslotID"
         @close="() => closeConfirmWindow()"
       />
     </div>
@@ -41,7 +43,7 @@ export default {
     username: "",
     timeslots: [],
     showConfirmWindow: false,
-    timeSlotID: ""
+    timeslotID: "",
   }),
   created() {
     fetch("/api/timeslots")
@@ -70,15 +72,16 @@ export default {
       })
       this.showConfirmWindow = true
       //this.$router.push(`/confirm`);
-      alert("TID VALD: "+ timeslotID);
+      //alert("TID VALD: "+ timeslotID);
     },
     closeConfirmWindow(){
       fetch("/api/unreserve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({timeslotID: timeslotID}),
+        body: JSON.stringify({timeslotID: this.timeslotID}),
       })
       this.showConfirmWindow = false;
+      console.log("unreserved", this.timeslotID)
     },
 
     authenticate() {
@@ -103,21 +106,17 @@ export default {
 <style>
 button {
   border-radius: 12px;
-
-
-  /* display: inline-block;
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 15px;
-  font-family: inherit; */
 }
 button:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.available{
+  background-color: rgba(14, 167, 14, 0.350);
+}
+.reserved{
+  background-color: rgba(255, 255, 0, 0.350);
+}
+.booked{
+  background-color: rgba(255, 0, 0, 0.350);
 }
 </style>

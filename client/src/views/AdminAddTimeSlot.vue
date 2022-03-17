@@ -50,6 +50,7 @@ export default {
   }),
   methods: {
     addTimeSlot(){
+        timeslotID = datepicked + timepicked
         
         //funktion som ska ta bort en tid
         this.$emit("close")

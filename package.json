@@ -23,6 +23,8 @@
     "language-stylus": "^3.2.0",
     "sass": "^1.49.9",
     "sqlite": "^4.0.25",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "vue": "^3.2.31",
+    "vue3-promise-dialog": "^0.2.6"
   }
 }

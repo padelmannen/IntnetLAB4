@@ -1,29 +1,31 @@
 <template>
-  <div class="row">
-    <div class="col"></div>
-    <form class="col" @submit.prevent="book(timeSlotID)">
-      <label for="username" class="form-label h4">Fill in name and confirm:</label>
-      <p>Time: {{timeSlotID}}</p>
-      <div>
-        Time left to confirm: {{ ((duration - elapsed) / 1000).toFixed(0) }} seconds
-      </div>
-      <input
-        id="username"
-        v-model="username"
-        type="text"
-        class="form-control"
-        placeholder="Name"
-        required
-        autofocus
-      />
-      <button type="submit" class="btn btn-dark mt-4 float-end">Confirm</button>
-      <button
-        class="btn btn-dark mt-4 float-start"
-        @click="closeWindow()"
-        >Cancel
-    </button>
-    </form>
-    <div class="col"></div>
+  <div class="popup">
+    <div class="popup-inner">
+    <div class="row">
+      <form class="col" @submit.prevent="book(timeslotID)">
+        <label for="username" class="form-label h4">Fill in name and confirm:</label>
+        <p>Time: {{timeslotID}}</p>
+        <div>
+          Time left to confirm: {{ ((duration - elapsed) / 1000).toFixed(0) }} seconds
+        </div>
+        <input
+          id="username"
+          v-model="username"
+          type="text"
+          class="form-control"
+          placeholder="Name"
+          required
+          autofocus
+        />
+        <button type="submit" class="btn btn-dark mt-4 float-end">Confirm</button>
+        <button
+          class="btn btn-dark mt-4 float-start"
+          @click="closeWindow()"
+          >Cancel
+      </button>
+      </form>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -38,7 +40,7 @@ export default {
   components: {},
   
   props: {
-    timeSlotID: String,
+    timeslotID: String,
   },
 
   data: () => ({
@@ -78,14 +80,14 @@ export default {
       const { commit } = this.$store;
       const { push } = this.$router;
     },
-    book(timeSlotID){
-      console.log("tsID: ", timeSlotID)
+    book(timeslotID){
+      console.log("tsID: ", timeslotID)
         //funktion som ska göra en tid bokad
         
       fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: this.username, timeSlotID: timeSlotID}),
+        body: JSON.stringify({ username: this.username, timeslotID: timeslotID}),
       })
         .then((res) => res.json())
         .then(() => {
@@ -103,3 +105,24 @@ export default {
 </script>
 
 
+<style scoped>
+.popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background-color: rgb(0 0 0 / 20%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-inner{
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+}
+
+</style>
