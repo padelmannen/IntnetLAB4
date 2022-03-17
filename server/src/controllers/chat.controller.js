@@ -22,6 +22,34 @@ router.get("/timeslots", async (req, res) => {
   res.status(200).json({ timeslots }); // same as { rooms: rooms }
 });
 
+router.post("/reserve", async (req, res) => {
+  /* console.log('bookername: ', req.body.bookerName);
+    console.log('id: ', bookedSlot); */
+
+  // const { socketID } = req.session;
+  // model.join(socketID, "/start");
+
+  await model.reserveTimeSlot(req.body.timeslotID);
+
+  // måste typ lägga in status ok här
+
+  res.status(200).json({ authenticated: true });
+});
+
+router.post("/unreserve", async (req, res) => {
+  /* console.log('bookername: ', req.body.bookerName);
+    console.log('id: ', bookedSlot); */
+
+  // const { socketID } = req.session;
+  // model.join(socketID, "/start");
+
+  await model.unreserveTimeSlot(req.body.timeslotID);
+
+  // måste typ lägga in status ok här
+
+  res.status(200).json({ authenticated: true });
+});
+
 router.post("/booking", async (req, res) => {
   /* console.log('bookername: ', req.body.bookerName);
     console.log('id: ', bookedSlot); */

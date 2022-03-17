@@ -81,6 +81,44 @@ class Model {
     this.io.emit("book", id, username);
 }
 
+async reserveTimeSlot(id) {
+  /* const theBooked = this.findTimeslotByID(id);
+      console.log(theBooked);
+      theBooked.addStatus("booked");
+      theBooked.addBookedBy(bookerName);
+      console.log(theBooked.bookedBy, "är här");
+      */
+
+  // console.log(userName);
+  console.log("id:", id)
+
+  const statement1 = await db.prepare(
+      `UPDATE timeSlots SET status=? WHERE id= ?`
+  );
+  statement1.run("reserved", id);
+  statement1.finalize();
+  this.io.emit("reserve", id);
+}
+
+async unreserveTimeSlot(id) {
+  /* const theBooked = this.findTimeslotByID(id);
+      console.log(theBooked);
+      theBooked.addStatus("booked");
+      theBooked.addBookedBy(bookerName);
+      console.log(theBooked.bookedBy, "är här");
+      */
+
+  // console.log(userName);
+  console.log("id:", id)
+
+  const statement1 = await db.prepare(
+      `UPDATE timeSlots SET status=? WHERE id= ?`
+  );
+  statement1.run("available", id);
+  statement1.finalize();
+  this.io.emit("available", id);
+}
+
   async getTimeSlots() {
     console.log("goes into this.timeslots");
     let sql = "SELECT * FROM timeSlots"

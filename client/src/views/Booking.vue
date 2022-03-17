@@ -60,15 +60,24 @@ export default {
     }
   },
   methods: {
-    bookTime(timeSlotID) {
+    bookTime(timeslotID) {
       console.log("time pressed")
-      this.timeSlotID = timeSlotID
+      this.timeslotID = timeslotID
+      fetch("/api/reserve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({timeslotID: timeslotID}),
+      })
       this.showConfirmWindow = true
       //this.$router.push(`/confirm`);
-
-      //alert("TID VALD: "+ time);
+      alert("TID VALD: "+ timeslotID);
     },
     closeConfirmWindow(){
+      fetch("/api/unreserve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({timeslotID: timeslotID}),
+      })
       this.showConfirmWindow = false;
     },
 
