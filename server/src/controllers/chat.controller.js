@@ -16,7 +16,7 @@ const router = Router();
  */
 
 router.get("/timeslots", async (req, res) => {
-  const timeslots = await model.getTimeSlots();
+  const timeslots = await model.getTimeslots();
 
   // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
   res.status(200).json({ timeslots }); // same as { rooms: rooms }
@@ -29,7 +29,7 @@ router.post("/reserve", async (req, res) => {
   // const { socketID } = req.session;
   // model.join(socketID, "/start");
 
-  await model.reserveTimeSlot(req.body.timeslotID);
+  await model.reserveTimeslot(req.body.timeslotID);
 
   // måste typ lägga in status ok här
 
@@ -43,7 +43,7 @@ router.post("/unreserve", async (req, res) => {
   // const { socketID } = req.session;
   // model.join(socketID, "/start");
 
-  await model.unreserveTimeSlot(req.body.timeslotID);
+  await model.unreserveTimeslot(req.body.timeslotID);
 
   // måste typ lägga in status ok här
 
@@ -57,17 +57,50 @@ router.post("/booking", async (req, res) => {
   // const { socketID } = req.session;
   // model.join(socketID, "/start");
 
-  await model.bookTimeSlot(req.body.timeslotID, req.body.username);
+  await model.bookTimeslot(req.body.timeslotID, req.body.username);
 
   // måste typ lägga in status ok här
 
   res.status(200).json({ authenticated: true });
 });
 
+router.post("/addTimeslot", async (req, res) => {
+  /* console.log('bookername: ', req.body.bookerName);
+    console.log('id: ', bookedSlot); */
+
+  // const { socketID } = req.session;
+  // model.join(socketID, "/start");
+  
+  const id = req.body.assistant + " " + req.body.date + " " + req.body.time
+  const assistant = req.body.assistant
+  const time = req.body.date + " " + req.body.time
+
+  await model.addTimeslot(id, assistant, time);
+
+  // måste typ lägga in status ok här
+
+  res.status(200).json({ authenticated: true });
+});
+
+
+router.post("/removeTimeslot", async (req, res) => {
+  /* console.log('bookername: ', req.body.bookerName);
+    console.log('id: ', bookedSlot); */
+
+  // const { socketID } = req.session;
+  // model.join(socketID, "/start");
+  
+  const id = req.body.id
+  await model.removeTimeslot(id);
+
+  // måste typ lägga in status ok här
+
+  res.status(200).json({ authenticated: true });
+});
 router.get("/timeslots/:name/messages", (req, res) => {
   // Check how to access data being sent as a path, query, header and cookie parameter or in the HTTP request body.
   const { time } = req.params;
-  const timeslot = model.findTimeSlotByTime(time);
+  const timeslot = model.findTimeslotByTime(time);
 
   // Use an unique session identifier to access information about the user making the request.
   const { id, socketID } = req.session;
@@ -95,7 +128,7 @@ router.get("/timeslots/:name/messages", (req, res) => {
 router.post("/timeslots/:name/messages", (req, res) => {
   const { time } = req.params;
   const { message } = req.body;
-  const timeslot = model.findTimeSlotByTime(time);
+  const timeslot = model.findTimeslotByTime(time);
 
   const { id } = req.session;
   const user = model.findUserById(id);

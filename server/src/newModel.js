@@ -25,7 +25,7 @@ class Model {
    * @param {String} time - The name of the room.
    * @returns {void}
    */
-  createTimeSlot(assistantID, id, time, status, bookedBy, reservedBy) {
+  createTimeslot(assistantID, id, time, status, bookedBy, reservedBy) {
     // console.log("creatar timeslot")
     this.timeslots[id] = new Timeslot(assistantID, id, time, status, bookedBy, reservedBy);
   }
@@ -35,7 +35,7 @@ class Model {
    * @param {String} time - The name of the room.
    * @returns {timeslot}
    */
-  findTimeSlotByTime(time) {
+  findTimeslotByTime(time) {
     return this.timeslots[time];
   }
 
@@ -61,7 +61,7 @@ class Model {
     return false;  
   }
 
-  async bookTimeSlot(username, id) {
+  async bookTimeslot(username, id) {
     /* const theBooked = this.findTimeslotByID(id);
         console.log(theBooked);
         theBooked.addStatus("booked");
@@ -74,14 +74,42 @@ class Model {
     console.log("id:", id)
 
     const statement1 = await db.prepare(
-        `UPDATE timeSlots SET bookedBy=?, status=? WHERE id= ?`
+        `UPDATE timeslots SET bookedBy=?, status=? WHERE id= ?`
     );
     statement1.run(username, "booked", id);
     statement1.finalize();
     this.io.emit("book", id, username);
 }
 
-async reserveTimeSlot(id) {
+async addTimeslot(id, assistant, time) {
+  /* const theBooked = this.findTimeslotByID(id);
+      console.log(theBooked);
+      theBooked.addStatus("booked");
+      theBooked.addBookedBy(bookerName);
+      console.log(theBooked.bookedBy, "är här");
+      */
+
+  // console.log(userName);
+  console.log("assistant: ", assistant)
+  console.log("time: ", time)
+  console.log("id:", id)
+
+  const statement1 = await db.prepare(
+      "INSERT INTO timeslots VALUES (?,?,?,?,?,?)")
+
+  statement1.run(
+      assistant,
+      id,
+      time,
+      "available",
+      "", 
+      ""
+    );
+  statement1.finalize();
+  this.io.emit("addTime", assistant, id, time);
+}
+
+async reserveTimeslot(id) {
   /* const theBooked = this.findTimeslotByID(id);
       console.log(theBooked);
       theBooked.addStatus("booked");
@@ -100,7 +128,15 @@ async reserveTimeSlot(id) {
   this.io.emit("reserve", id);
 }
 
-async unreserveTimeSlot(id) {
+async getStatus(id){
+  const row = await db.get(
+    `SELECT * FROM timeslots WHERE id=?`, id
+  );
+  console.log(row.status)
+  return row.status
+}
+
+async unreserveTimeslot(id) {
   /* const theBooked = this.findTimeslotByID(id);
       console.log(theBooked);
       theBooked.addStatus("booked");
@@ -110,33 +146,57 @@ async unreserveTimeSlot(id) {
 
   // console.log(userName);
   console.log("id:", id)
-
-  const statement1 = await db.prepare(
-      `UPDATE timeSlots SET status=? WHERE id= ?`
-  );
-  statement1.run("available", id);
-  statement1.finalize();
-  this.io.emit("available", id);
+  const status = await this.getStatus(id)
+  console.log(status)
+  if (status === "reserved"){
+    const statement1 = await db.prepare(
+      `UPDATE timeslots SET status=? WHERE id= ?`
+    );
+    statement1.run("available", id);
+    statement1.finalize();
+    this.io.emit("available", id);
+  } 
 }
 
-  async getTimeSlots() {
-    console.log("goes into this.timeslots");
-    let sql = "SELECT * FROM timeSlots"
-    await db.each(sql, [], (err, row) => {
-      if (err) {
-        console.log("error")
-        throw err;
-      }
-      else{
-        // console.log("skapar timeSlot: ", row, row.id)
-        this.createTimeSlot(row.assistantID, row.id, row.time, row.status, row.bookedBy, row.reservedBy)
-      }
-    });
+async removeTimeslot(id) {
+  console.log("removing")
+  /* const theBooked = this.findTimeslotByID(id);
+      console.log(theBooked);
+      theBooked.addStatus("booked");
+      theBooked.addBookedBy(bookerName);
+      console.log(theBooked.bookedBy, "är här");
+      */
 
-    // console.log("efter skapande är timeslots: ", Object.values(this.timeslots))
-    console.log(Object.values(this.timeslots))
-    
-    return Object.values(this.timeslots);
+  // console.log(userName);
+  console.log("inside deletetimelsot method in model");
+  const statement = await db.prepare("DELETE FROM timeslots WHERE id = (?)");
+  statement.run(id);
+  statement.finalize();
+  console.log("Delete times slots returns this from model.js");
+  delete this.timeslots[id]
+  this.io.emit("deleteSlot", id);
+ 
+}
+
+
+async getTimeslots() {
+  console.log("goes into this.timeslots");
+  let sql = "SELECT * FROM timeslots"
+  await db.each(sql, [], (err, row) => {
+    if (err) {
+      console.log("error")
+      throw err;
+    }
+    else{
+      // console.log("skapar timeSlot: ", row, row.id)
+      this.createTimeslot(row.assistantID, row.id, row.time, row.status, row.bookedBy, row.reservedBy)
+    }
+  });
+
+  // console.log("efter skapande är timeslots: ", Object.values(this.timeslots))
+  console.log(Object.values(this.timeslots))
+  
+  return Object.values(this.timeslots);
 }
 
   /**

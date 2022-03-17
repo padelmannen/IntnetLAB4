@@ -38,7 +38,7 @@ export default {
   components: {},
   
   props: {
-    timeSlotID: String,
+    timeslotID: String,
   },
 
   data: () => ({
@@ -78,8 +78,8 @@ export default {
       const { commit } = this.$store;
       const { push } = this.$router;
     },
-    book(timeSlotID){
-      console.log("tsID: ", timeSlotID)
+    book(timeslotID){
+      console.log("tsID: ", timeslotID)
         //funktion som ska göra en tid bokad
         
       fetch("/api/booking", {

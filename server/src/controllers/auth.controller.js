@@ -82,8 +82,8 @@ router.post("/booking", (req, res) => {
   // Check how to access data being sent as a path, query, header and cookie parameter or in the HTTP request body.
   // const { username } = req.body;
   console.log("inne i auth booking")
-  console.log("user: ", req.body.username, "id:", req.body.timeSlotID)
-  model.bookTimeSlot(req.body.username, req.body.timeSlotID,);
+  console.log("user: ", req.body.username, "id:", req.body.timeslotID)
+  model.bookTimeslot(req.body.username, req.body.timeslotID,);
 
   // måste typ lägga in status ok här
 

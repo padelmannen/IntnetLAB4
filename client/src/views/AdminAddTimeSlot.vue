@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <form class="col" @submit.prevent="addTimeSlot()">
+    <form class="col" @submit.prevent="addTimeslot()">
       <label for="username" class="form-label h4">Add Time Slot</label>
       <input
         id="datepicked"
@@ -38,8 +38,12 @@
 //https://vuejs.org/examples/#timer
 
 export default {
-  name: "configTimeSlotView",
+  name: "configTimeslotView",
   components: {
+  },
+
+  props: {
+    assistant: String,
   },
 
   data: () => ({
@@ -49,8 +53,13 @@ export default {
     timepicked:"",
   }),
   methods: {
-    addTimeSlot(){
-        
+    addTimeslot(){
+      console.log(this.assistant + datepicked.value+" "+timepicked.value)
+      fetch("/api/addTimeslot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({assistant: this.assistant, date: datepicked.value, time: timepicked.value}),
+      })
         //funktion som ska ta bort en tid
         this.$emit("close")
     },

@@ -4,18 +4,18 @@
     <div class="col list-group">
       <label for="timetable" class="form-label h4">Welcome {{assistant}}!</label>
         <button
-          v-for="timeslot in assistantTimeSlots()"
+          v-for="timeslot in assistantTimeslots()"
           :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
-          @click="configTimeSlot(timeslot.time)"
+          @click="configTimeslot(timeslot)"
         >
           {{ timeslot.time }}
         </button>
         <button
           type="button"
           class="btn btn-dark mt-4 float-end"
-          @click="addTimeSlot()"
+          @click="addTimeslot()"
         >
           Add Time Slot
         </button>
@@ -34,10 +34,12 @@
       <Configure
         v-if="showConfigWindow"
         :time="curTimePressed"
+        :id="id"
         @close="() => closeConfigWindow()"
       />
       <Add
         v-if="showAddWindow"
+        :assistant="assistant"
         @close="() => closeAddWindow()"
       />
       <!-- behöver nog använda props för att skicka in rätt tid -->
@@ -47,8 +49,8 @@
 </template>
 
 <script>
-import Configure from "./AdminRemoveTimeSlot.vue";
-import Add from "./AdminAddTimeSlot.vue";
+import Configure from "./AdminRemoveTimeslot.vue";
+import Add from "./AdminAddTimeslot.vue";
 
 export default {
   name: "AdminView",
@@ -73,14 +75,14 @@ export default {
       .catch(console.error);
   },
   methods: {
-    assistantTimeSlots(){
-      const myTimeSlots = [];
+    assistantTimeslots(){
+      const myTimeslots = [];
       for(var timeslot in this.timeslots){
         if(this.timeslots[timeslot].assistantID === this.assistant){
-          myTimeSlots.push(this.timeslots[timeslot])
+          myTimeslots.push(this.timeslots[timeslot])
         }
       }
-      return myTimeSlots
+      return myTimeslots
     },
     logout() {
       //this.$router.push(`/rooms/${name}`);
@@ -95,11 +97,12 @@ export default {
       
 
     },
-    configTimeSlot(time) {
+    configTimeslot(timeslot) {
       //this.$router.push(`/rooms/${name}`);
       console.log("time pressed")
       this.closeAddWindow();
-      this.curTimePressed = time;
+      this.curTimePressed = timeslot.time;
+      this.id = timeslot.id;
       this.showConfigWindow = true;
       //alert("TID VALD: "+ time);
     },
@@ -107,7 +110,7 @@ export default {
         console.log("close configure window")
         this.showConfigWindow = false;
     },
-    addTimeSlot() {
+    addTimeslot() {
       //this.$router.push(`/rooms/${name}`);
       console.log("add time slot")
       this.closeConfigWindow();
