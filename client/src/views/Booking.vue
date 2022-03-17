@@ -19,7 +19,7 @@
       <div class="col"></div>
       <Confirm
         v-if="showConfirmWindow"
-        :timeSlotID="timeSlotID"
+        :timeslotID="timeslotID"
         @close="() => closeConfirmWindow()"
       />
     </div>
@@ -76,7 +76,7 @@ export default {
       fetch("/api/unreserve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({timeslotID: timeslotID}),
+        body: JSON.stringify({timeslotID: this.timeslotID}),
       })
       this.showConfirmWindow = false;
     },

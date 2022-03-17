@@ -1,9 +1,9 @@
 <template>
   <div class="row">
     <div class="col"></div>
-    <form class="col" @submit.prevent="book(timeSlotID)">
+    <form class="col" @submit.prevent="book(timeslotID)">
       <label for="username" class="form-label h4">Fill in name and confirm:</label>
-      <p>Time: {{timeSlotID}}</p>
+      <p>Time: {{timeslotID}}</p>
       <div>
         Time left to confirm: {{ ((duration - elapsed) / 1000).toFixed(0) }} seconds
       </div>
@@ -85,7 +85,7 @@ export default {
       fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: this.username, timeSlotID: timeSlotID}),
+        body: JSON.stringify({ username: this.username, timeslotID: timeslotID}),
       })
         .then((res) => res.json())
         .then(() => {
