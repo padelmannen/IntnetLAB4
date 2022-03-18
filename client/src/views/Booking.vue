@@ -2,14 +2,13 @@
   <div class="row">
     <div class="col"></div>
     <div class="col list-group">
-      <label for="timetable" class="form-label h4">Available times:</label>
+      <label for="timetable" class="form-label h4">Time Slots:</label>
         <button
           v-for="timeslot in timeslots"
           v-bind:class="timeslot.status"
           :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
-          ng-class="{'pending':row.status === 'Pending'}, 'completed':row.status ==="
           @click="bookTime(timeslot.id)"
         >
           {{ timeslot.time }}
@@ -73,6 +72,9 @@ export default {
       this.showConfirmWindow = true
       //this.$router.push(`/confirm`);
       //alert("TID VALD: "+ timeslotID);
+
+      this.timeslots.$forceUpdate();
+
     },
     closeConfirmWindow(){
       fetch("/api/unreserve", {

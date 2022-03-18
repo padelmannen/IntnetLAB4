@@ -124,5 +124,4 @@ export default {
   padding: 32px;
   border-radius: 12px;
 }
-
 </style>

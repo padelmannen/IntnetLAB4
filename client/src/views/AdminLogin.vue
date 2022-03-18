@@ -48,6 +48,7 @@ export default {
        .then((resp) => {
           if (resp.ok){
             this.$store.commit("setAuthenticated", true);
+            this.$store.commit("setAdminUser", this.username)
             this.$router.push({
             path: "/admin"+this.username,
             })

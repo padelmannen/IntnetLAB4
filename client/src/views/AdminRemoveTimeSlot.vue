@@ -1,17 +1,19 @@
 <template>
-  <div class="row">
-    <div class="col"></div>
-    <form class="col" @submit.prevent="removeTimeSlot()">
-      <label for="username" class="form-label h4">Configure Time Slot</label>
-      <p>Time: {{time}}</p>
-      <button type="submit" class="btn btn-dark mt-4 float-end">Remove</button>
-      <button
-        class="btn btn-dark mt-4 float-start"
-        @click="$emit('close')"
-        >Cancel
-    </button>
-    </form>
-    <div class="col"></div>
+  <div class="popup">
+    <div class="popup-inner">
+      <div class="row">
+        <form class="col" @submit.prevent="removeTimeSlot()">
+          <label for="username" class="form-label h4">Configure Time Slot</label>
+          <p>Time: {{time}}</p>
+          <button type="submit" class="btn btn-dark mt-4 float-end">Remove</button>
+          <button
+            class="btn btn-dark mt-4 float-start"
+            @click="$emit('close')"
+            >Cancel
+        </button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -61,3 +63,23 @@ export default {
 </script>
 
 
+<style scoped>
+.popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background-color: rgb(0 0 0 / 20%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-inner{
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+}
+</style>
