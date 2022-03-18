@@ -24,11 +24,12 @@
 
 
 export default {
-  name: "configTimeSlotView",
+  name: "configTimeslotView",
   components: {},
   
   props: {
     time: String,
+    id: String,
   },
 
   data: () => ({
@@ -38,8 +39,14 @@ export default {
   
   methods: {
 
-    removeTimeSlot(){
+    removeTimeslot(){
         //funktion som ska ta bort en tid
+      fetch("/api/removeTimeslot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({id: this.id}),
+      })
+
         this.$emit("close")
     },
     authenticate() {

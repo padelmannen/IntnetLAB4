@@ -55,8 +55,8 @@ export default {
 
     //color buttons depending on status
     for(const timeslot in this.timeslots){
-      const curTimeSlot = this.timeslots[timeslot]
-      //kolla om curTimeSlot är bokad
+      const curTimeslot = this.timeslots[timeslot]
+      //kolla om curTimeslot är bokad
       //om bokad, lägga till CSS element background-color
     }
   },

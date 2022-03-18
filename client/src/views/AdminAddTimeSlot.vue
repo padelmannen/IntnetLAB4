@@ -40,8 +40,12 @@
 //https://vuejs.org/examples/#timer
 
 export default {
-  name: "configTimeSlotView",
+  name: "configTimeslotView",
   components: {
+  },
+
+  props: {
+    assistant: String,
   },
 
   data: () => ({
@@ -51,9 +55,15 @@ export default {
     timepicked:"",
   }),
   methods: {
-    addTimeSlot(){
-        timeslotID = datepicked + timepicked
-        
+
+    addTimeslot(){
+      console.log(this.assistant + datepicked.value+" "+timepicked.value)
+      fetch("/api/addTimeslot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({assistant: this.assistant, date: datepicked.value, time: timepicked.value}),
+      })
+
         //funktion som ska ta bort en tid
         this.$emit("close")
     },
