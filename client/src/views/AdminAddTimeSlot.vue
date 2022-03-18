@@ -2,7 +2,7 @@
   <div class="popup">
     <div class="popup-inner">
       <div class="row">
-        <form class="col" @submit.prevent="addTimeSlot()">
+        <form class="col" @submit.prevent="addTimeslot()">
           <label for="username" class="form-label h4">Add Time Slot</label>
           <input
             id="datepicked"

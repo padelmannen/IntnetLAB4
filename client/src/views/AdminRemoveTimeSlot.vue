@@ -2,7 +2,7 @@
   <div class="popup">
     <div class="popup-inner">
       <div class="row">
-        <form class="col" @submit.prevent="removeTimeSlot()">
+        <form class="col" @submit.prevent="removeTimeslot()">
           <label for="username" class="form-label h4">Configure Time Slot</label>
           <p>Time: {{time}}</p>
           <button type="submit" class="btn btn-dark mt-4 float-end">Remove</button>

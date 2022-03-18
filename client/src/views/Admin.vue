@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import Configure from "./AdminRemoveTimeslot.vue";
-import Add from "./AdminAddTimeslot.vue";
+import Configure from "./AdminRemoveTimeSlot.vue";
+import Add from "./AdminAddTimeSlot.vue";
 
 export default {
   name: "AdminView",

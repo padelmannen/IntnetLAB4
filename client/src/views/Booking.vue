@@ -70,11 +70,16 @@ export default {
         body: JSON.stringify({timeslotID: timeslotID}),
       })
       this.showConfirmWindow = true
-      //this.$router.push(`/confirm`);
-      //alert("TID VALD: "+ timeslotID);
-
-      this.timeslots.$forceUpdate();
-
+      updateTimeslots();
+    },
+    updateTimeslots(){
+      fetch("/api/timeslots")
+        .then((res) => res.json())
+        .then(({ timeslots }) => {
+          console.log(timeslots)
+          this.timeslots = timeslots;
+        })
+        .catch(console.error);
     },
     closeConfirmWindow(){
       fetch("/api/unreserve", {
