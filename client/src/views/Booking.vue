@@ -59,6 +59,18 @@ export default {
       //kolla om curTimeslot är bokad
       //om bokad, lägga till CSS element background-color
     }
+
+    const { socket } = this.$root;
+
+    socket.on("reserve", () => {
+      this.updateTimeslots();
+    });
+    socket.on("unreserve", () => {
+      this.updateTimeslots();
+    });
+    socket.on("booking", () => {
+      this.updateTimeslots();
+    });
   },
   methods: {
     bookTime(timeslotID) {
@@ -70,16 +82,7 @@ export default {
         body: JSON.stringify({timeslotID: timeslotID}),
       })
       this.showConfirmWindow = true
-      updateTimeslots();
-    },
-    updateTimeslots(){
-      fetch("/api/timeslots")
-        .then((res) => res.json())
-        .then(({ timeslots }) => {
-          console.log(timeslots)
-          this.timeslots = timeslots;
-        })
-        .catch(console.error);
+      //updateTimeslots();
     },
     closeConfirmWindow(){
       fetch("/api/unreserve", {
@@ -89,6 +92,17 @@ export default {
       })
       this.showConfirmWindow = false;
       console.log("unreserved", this.timeslotID)
+      this.updateTimeslots();
+    },
+    updateTimeslots(){
+      console.log("update")
+      fetch("/api/timeslots")
+        .then((res) => res.json())
+        .then(({ timeslots }) => {
+          console.log(timeslots)
+          this.timeslots = timeslots;
+        })
+        .catch(console.error);
     },
 
     authenticate() {
