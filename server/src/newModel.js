@@ -106,7 +106,7 @@ async addTimeslot(id, assistant, time) {
       ""
     );
   statement1.finalize();
-  this.io.emit("addTime", assistant, id, time);
+  this.io.emit("add", assistant, id, time);
 }
 
 async reserveTimeslot(id) {
@@ -154,7 +154,7 @@ async unreserveTimeslot(id) {
     );
     statement1.run("available", id);
     statement1.finalize();
-    this.io.emit("available", id);
+    this.io.emit("unreserve", id);
   } 
 }
 
@@ -174,7 +174,7 @@ async removeTimeslot(id) {
   statement.finalize();
   console.log("Delete times slots returns this from model.js");
   delete this.timeslots[id]
-  this.io.emit("deleteSlot", id);
+  this.io.emit("remove", id);
  
 }
 

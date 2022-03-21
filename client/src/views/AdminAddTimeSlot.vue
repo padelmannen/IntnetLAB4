@@ -64,7 +64,6 @@ export default {
         body: JSON.stringify({assistant: this.assistant, date: datepicked.value, time: timepicked.value}),
       })
 
-        //funktion som ska ta bort en tid
         this.$emit("close")
     },
     authenticate() {

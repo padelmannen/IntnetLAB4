@@ -73,6 +73,18 @@ export default {
         this.timeslots = timeslots;
       })
       .catch(console.error);
+
+    const { socket } = this.$root;
+
+    socket.on("add", () => {
+      console.log("addTimeslotSocket")
+      this.updateTimeslots();
+    });
+    socket.on("remove", () => {
+      console.log("removeTimeslotSocket")
+      this.updateTimeslots();
+    });
+
   },
   methods: {
     assistantTimeslots(){
@@ -106,9 +118,20 @@ export default {
       this.showConfigWindow = true;
       //alert("TID VALD: "+ time);
     },
+    updateTimeslots(){
+      console.log("update")
+      fetch("/api/timeslots")
+        .then((res) => res.json())
+        .then(({ timeslots }) => {
+          console.log(timeslots)
+          this.timeslots = timeslots;
+        })
+        .catch(console.error);
+    },
     closeConfigWindow(){
         console.log("close configure window")
         this.showConfigWindow = false;
+        //this.updateTimeslots();
     },
     addTimeslot() {
       //this.$router.push(`/rooms/${name}`);
@@ -120,6 +143,7 @@ export default {
     closeAddWindow(){
         console.log("close add window")
         this.showAddWindow = false;
+        //this.updateTimeslots();
     },
     authenticate() {
       const { commit } = this.$store;

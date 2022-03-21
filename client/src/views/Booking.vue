@@ -53,13 +53,6 @@ export default {
       })
       .catch(console.error);
 
-    //color buttons depending on status
-    for(const timeslot in this.timeslots){
-      const curTimeslot = this.timeslots[timeslot]
-      //kolla om curTimeslot är bokad
-      //om bokad, lägga till CSS element background-color
-    }
-
     const { socket } = this.$root;
 
     socket.on("reserve", () => {
@@ -68,7 +61,7 @@ export default {
     socket.on("unreserve", () => {
       this.updateTimeslots();
     });
-    socket.on("booking", () => {
+    socket.on("book", () => {
       this.updateTimeslots();
     });
   },
@@ -92,7 +85,7 @@ export default {
       })
       this.showConfirmWindow = false;
       console.log("unreserved", this.timeslotID)
-      this.updateTimeslots();
+      //this.updateTimeslots();
     },
     updateTimeslots(){
       console.log("update")
