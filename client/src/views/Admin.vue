@@ -3,6 +3,7 @@
     <div class="col"></div>
     <div class="col list-group">
       <label for="timetable" class="form-label h4">Welcome {{assistant}}!</label>
+      <p>Dina tider:</p>
         <button
           v-for="timeslot in assistantTimeslots()"
           :key="timeslot.time"
@@ -35,6 +36,7 @@
         v-if="showConfigWindow"
         :time="curTimePressed"
         :id="id"
+        :bookedby="bookedby"
         @close="() => closeConfigWindow()"
       />
       <Add
@@ -115,6 +117,7 @@ export default {
       this.closeAddWindow();
       this.curTimePressed = timeslot.time;
       this.id = timeslot.id;
+      this.bookedby = timeslot.bookedby;
       this.showConfigWindow = true;
       //alert("TID VALD: "+ time);
     },

@@ -3,13 +3,22 @@
     <div class="col"></div>
     <div class="col list-group">
       <label for="timetable" class="form-label h4">Time Slots:</label>
+      <div
+        v-if="notAvailable"
+        :class="errorMessage"
+        class="alert alert-danger alert-dismissable"
+        style="text-align: center"
+      >
+        Tiden kan inte bokas!
+      </div>  
+
         <button
           v-for="timeslot in timeslots"
           v-bind:class="timeslot.status"
           :key="timeslot.time"
           type="button"
           class="list-group-item list-group-item-action my-2 py-2"
-          @click="bookTime(timeslot.id)"
+          @click="bookTime(timeslot)"
         >
           {{ timeslot.time }}
         </button>
@@ -43,6 +52,7 @@ export default {
     timeslots: [],
     showConfirmWindow: false,
     timeslotID: "",
+    notAvailable: false,
   }),
   created() {
     fetch("/api/timeslots")
@@ -66,16 +76,25 @@ export default {
     });
   },
   methods: {
-    bookTime(timeslotID) {
-      console.log("time pressed")
-      this.timeslotID = timeslotID
-      fetch("/api/reserve", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({timeslotID: timeslotID}),
-      })
-      this.showConfirmWindow = true
-      //updateTimeslots();
+    bookTime(timeslot) {
+      const timeslotStatus = timeslot.status
+      console.log(timeslotStatus)
+
+      if(timeslotStatus === "available"){
+        this.notAvailable = false;
+        this.timeslotID = timeslot.id
+        fetch("/api/reserve", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({timeslotID: this.timeslotID}),
+        })
+        this.showConfirmWindow = true;
+      }
+      else {
+        this.notAvailable = true;
+      }
+
+
     },
     closeConfirmWindow(){
       fetch("/api/unreserve", {
@@ -132,5 +151,8 @@ button:hover {
 }
 .booked{
   background-color: rgba(255, 0, 0, 0.350);
+}
+.errorMessage{
+  border-radius: 24px;
 }
 </style>
