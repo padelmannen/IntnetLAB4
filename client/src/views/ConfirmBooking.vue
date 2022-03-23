@@ -33,16 +33,20 @@
 </template>
 
 <script>
-//för timer
-//https://vuejs.org/examples/#timer
+// för timer
+// https://vuejs.org/examples/#timer
 
 export default {
-  name: "confirmBookingView",
+  name: "ConfirmBookingView",
   components: {},
 
   props: {
-    timeslotID: String,
+    timeslotID: {
+      type: String,
+      default: "",
+    },
   },
+  emits: ["close"],
 
   data: () => ({
     username: "",
@@ -63,7 +67,7 @@ export default {
         curTime - lastTime,
         this.duration - this.elapsed
       );
-      //console.log(this.elapsed)
+      // console.log(this.elapsed)
       lastTime = curTime;
       if (this.duration !== this.elapsed && this.windowOpen) {
         this.handle = requestAnimationFrame(update);
@@ -78,20 +82,20 @@ export default {
       this.windowOpen = false;
       this.$emit("close");
     },
-    authenticate() {
-      const { commit } = this.$store;
-      const { push } = this.$router;
-    },
+    // authenticate() {
+    //   const { commit } = this.$store;
+    //   const { push } = this.$router;
+    // },
     book(timeslotID) {
       console.log("tsID: ", timeslotID);
-      //funktion som ska göra en tid bokad
+      // funktion som ska göra en tid bokad
 
       fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: this.username,
-          timeslotID: timeslotID,
+          timeslotID,
         }),
       })
         .then((res) => res.json())

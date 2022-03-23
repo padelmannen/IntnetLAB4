@@ -91,11 +91,18 @@ export default {
   methods: {
     assistantTimeslots() {
       const myTimeslots = [];
-      for (const timeslot in this.timeslots) {
-        if (this.timeslots[timeslot].assistantID === this.assistant) {
-          myTimeslots.push(this.timeslots[timeslot]);
+
+      Object.keys(this.timeslots).forEach((key) => {
+        if (this.timeslots[key].assistantID === this.assistant) {
+          myTimeslots.push(this.timeslots[key]);
         }
-      }
+      });
+
+      // for (const timeslot in this.timeslots) {
+      //   if (this.timeslots[timeslot].assistantID === this.assistant) {
+      //     myTimeslots.push(this.timeslots[timeslot]);
+      //   }
+      // }
       return myTimeslots;
     },
     logout() {
@@ -103,12 +110,11 @@ export default {
       // alert("Tried to logout!");
       const { commit } = this.$store;
       const { push } = this.$router;
-      this.$store.commit("setAuthenticated", false);
-      this.$router
-        .push({
-          path: "adminlogin",
-        })
-        .catch(console.error);
+
+      commit("setAuthenticated", false);
+      push({
+        path: "adminlogin",
+      }).catch(console.error);
     },
     configTimeslot(timeslot) {
       // this.$router.push(`/rooms/${name}`);

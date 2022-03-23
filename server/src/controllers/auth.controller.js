@@ -10,19 +10,19 @@ const router = Router();
  * @param {Function} next
  * @returns {void}
  */
-const requireAuth = (req, res, next) => {
-  // Use an unique session identifier to access information about the user making the request.
-  const { id } = req.session;
-  const user = model.findUserById(id);
+// const requireAuth = (req, res, next) => {
+//   // Use an unique session identifier to access information about the user making the request.
+//   const { id } = req.session;
+//   const user = model.findUserById(id);
 
-  //if (user === undefined) {
-  // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
-  //res.status(401).end();
-  //return;
-  //}
+//   // if (user === undefined) {
+//   // Choose the appropriate HTTP response status code and send an HTTP response if any back to the client.
+//   // res.status(401).end();
+//   // return;
+//   // }
 
-  next();
-};
+//   next();
+// };
 
 router.get("/users/me", (req, res) => {
   const { id } = req.session;
@@ -91,4 +91,4 @@ router.post("/booking", (req, res) => {
   res.status(200).json({ authenticated: true });
 });
 
-export default { router, requireAuth };
+export default { router };

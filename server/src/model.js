@@ -63,10 +63,11 @@ class Model {
     return this.users[id];
   }
 
-  //kanske kan användas vid utloggning
+  // kanske kan användas vid utloggning
   removeUser(id) {
     this.users[id] = undefined;
   }
+
   /**
    * Push out a message to all connected clients in the given room.
    * @param {Room} room - The room to add the message to.

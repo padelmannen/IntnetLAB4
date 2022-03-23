@@ -2,7 +2,7 @@
   <div class="popup">
     <div class="popup-inner">
       <div class="row">
-        <form class="col" @submit.prevent="addTimeslot()">
+        <form class="col" @submit.prevent="addTimeslot(datepicked, timepicked)">
           <label for="username" class="form-label h4">Add Time Slot</label>
           <input
             id="datepicked"
@@ -33,33 +33,34 @@
 </template>
 
 <script>
-//för timer
-//https://vuejs.org/examples/#timer
-
 export default {
-  name: "configTimeslotView",
+  name: "ConfigTimeslotView",
   components: {},
 
   props: {
-    assistant: String,
+    assistant: {
+      type: String,
+      default: "",
+    },
   },
+  emits: ["close"],
 
   data: () => ({
     username: "",
     open: false,
-    datepicked: "",
-    timepicked: "",
+    // datepicked: "",
+    // timepicked: "",
   }),
   methods: {
-    addTimeslot() {
-      console.log(this.assistant + datepicked.value + " " + timepicked.value);
+    addTimeslot(datepicked, timepicked) {
+      console.log(`${this.assistant + datepicked} ${timepicked}`);
       fetch("/api/addTimeslot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           assistant: this.assistant,
-          date: datepicked.value,
-          time: timepicked.value,
+          date: datepicked,
+          time: timepicked,
         }),
       });
 

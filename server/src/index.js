@@ -64,7 +64,7 @@ app.use("/api", auth.router);
 app.use("/api", chat.router);
 
 // All chat endpoints require the user to be authenticated.
-app.use("/api", auth.requireAuth, chat.router);
+// app.use("/api", auth.requireAuth, chat.router);
 
 // Initialize model.
 model.init(io);

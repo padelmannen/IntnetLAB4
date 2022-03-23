@@ -71,9 +71,9 @@ router.post("/addTimeslot", async (req, res) => {
   // const { socketID } = req.session;
   // model.join(socketID, "/start");
 
-  const id = req.body.assistant + " " + req.body.date + " " + req.body.time;
-  const assistant = req.body.assistant;
-  const time = req.body.date + " " + req.body.time;
+  const id = `${req.body.assistant} ${req.body.date} ${req.body.time}`;
+  const { assistant } = req.body;
+  const time = `${req.body.date} ${req.body.time}`;
 
   await model.addTimeslot(id, assistant, time);
 
@@ -89,7 +89,7 @@ router.post("/removeTimeslot", async (req, res) => {
   // const { socketID } = req.session;
   // model.join(socketID, "/start");
 
-  const id = req.body.id;
+  const { id } = req.body;
   await model.removeTimeslot(id);
 
   // måste typ lägga in status ok här

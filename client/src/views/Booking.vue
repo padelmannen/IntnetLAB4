@@ -7,15 +7,14 @@
         v-if="notAvailable"
         :class="errorMessage"
         class="alert alert-danger alert-dismissable"
-        style="text-align: center"
       >
         Tiden kan inte bokas!
       </div>
 
       <button
         v-for="timeslot in timeslots"
-        v-bind:class="timeslot.status"
         :key="timeslot.time"
+        :class="timeslot.status"
         type="button"
         class="list-group-item list-group-item-action my-2 py-2"
         @click="bookTime(timeslot)"
@@ -29,7 +28,7 @@
       <div class="col"></div>
       <Confirm
         v-if="showConfirmWindow"
-        :timeslotID="timeslotID"
+        :timeslot-i-d="timeslotID"
         @close="() => closeConfirmWindow()"
       />
     </div>
@@ -108,7 +107,7 @@ export default {
       });
       this.showConfirmWindow = false;
       console.log("unreserved", this.timeslotID);
-      //this.updateTimeslots();
+      // this.updateTimeslots();
     },
     updateTimeslots() {
       console.log("update");
@@ -134,7 +133,7 @@ export default {
         .then(({ authenticated }) => {
           commit("setAuthenticated", authenticated);
           push(authenticated === true ? "/timeslots" : "/booking");
-        }) //denna är helt fel!
+        }) // denna är helt fel!
         .catch(console.error);
     },
   },
@@ -144,20 +143,24 @@ export default {
 button {
   border-radius: 12px;
 }
+
 button:hover {
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 12px 16px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
+
 .available {
-  background-color: rgba(14, 167, 14, 0.35);
+  background-color: rgb(14 167 14 / 35%);
 }
+
 .reserved {
-  background-color: rgba(255, 255, 0, 0.35);
+  background-color: rgb(255 255 0 / 35%);
 }
+
 .booked {
-  background-color: rgba(255, 0, 0, 0.35);
+  background-color: rgb(255 0 0 / 35%);
 }
-.errorMessage {
+
+/* div.errorMessage {
   border-radius: 24px;
-}
+} */
 </style>

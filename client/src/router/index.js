@@ -1,26 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "../store";
-import Rooms from "../views/Rooms.vue";
-import Room from "../views/Room.vue";
-import Login from "../views/Login.vue";
 import Booking from "../views/Booking.vue";
 import AdminLogin from "../views/AdminLogin.vue";
 import Admin from "../views/Admin.vue";
 import ConfirmBooking from "../views/ConfirmBooking.vue";
 
 const routes = [
-  {
-    path: "/",
-    redirect: "/rooms",
-  },
-  {
-    path: "/rooms",
-    component: Rooms,
-  },
-  {
-    path: "/rooms/:name",
-    component: Room,
-  },
   {
     path: "/booking",
     component: Booking,
@@ -53,17 +38,15 @@ router.beforeEach((to, from, next) => {
     to.path === "/confirm"
   ) {
     if (to.path === "/admin") {
-      next("/admin" + store.state.adminUser);
+      next(`/admin${store.state.adminUser}`);
     } else {
       next();
     }
+  } else if (to.path === "/admin") {
+    next("/adminlogin");
   } else {
-    if (to.path === "/admin") {
-      next("/adminlogin");
-    } else {
-      console.info("Unauthenticated user. Redirecting to booking page.");
-      next("/booking");
-    }
+    console.info("Unauthenticated user. Redirecting to booking page.");
+    next("/booking");
   }
 });
 

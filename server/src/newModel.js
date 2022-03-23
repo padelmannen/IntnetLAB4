@@ -1,4 +1,4 @@
-import Room from "./models/room.model.js";
+// import Room from "./models/room.model.js";
 import User from "./models/user.model.js";
 import Timeslot from "./models/timeslot.model.js";
 import db from "./database.js";
@@ -46,22 +46,15 @@ class Model {
     return this.timeslots[time];
   }
 
-  /**
-   * Return all the rooms.
-   * @returns {timeslot[]}
-   */
-  // getTimeSlots() {
-  //   return Object.values(this.timeslots);
-  // }
-
   async checkLogin(username, password) {
     console.log("username: ", username);
     console.log("password:", password);
 
-    const sql =
-      (`SELECT * from assistants WHERE assistantID= ? AND password = ?`,
-      username,
-      password);
+    console.log(this.users);
+    // const sql =
+    //   (`SELECT * from assistants WHERE assistantID= ? AND password = ?`,
+    //   username,
+    //   password);
     const acceptedLogin = await db.get(
       `SELECT * from assistants WHERE assistantID= ? AND password = ?`,
       username,
@@ -138,6 +131,7 @@ class Model {
 
   async getStatus(id) {
     const row = await db.get(`SELECT * FROM timeslots WHERE id=?`, id);
+    console.log(this.users);
     console.log(row.status);
     return row.status;
   }
@@ -185,7 +179,7 @@ class Model {
 
   async getTimeslots() {
     console.log("goes into this.timeslots");
-    let sql = "SELECT * FROM timeslots";
+    const sql = "SELECT * FROM timeslots";
     await db.each(sql, [], (err, row) => {
       if (err) {
         console.log("error");

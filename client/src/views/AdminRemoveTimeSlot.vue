@@ -20,17 +20,21 @@
 </template>
 
 <script>
-//för timer
-//https://vuejs.org/examples/#timer
-
 export default {
-  name: "configTimeslotView",
+  name: "ConfigTimeslotView",
   components: {},
 
   props: {
-    time: String,
-    id: String,
+    time: {
+      type: String,
+      default: "",
+    },
+    id: {
+      type: String,
+      default: "",
+    },
   },
+  emits: ["close"],
 
   data: () => ({
     username: "",
@@ -39,7 +43,6 @@ export default {
 
   methods: {
     removeTimeslot() {
-      //funktion som ska ta bort en tid
       fetch("/api/removeTimeslot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
