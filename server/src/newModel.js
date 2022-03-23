@@ -120,7 +120,7 @@ class Model {
 
     // console.log(userName);
     console.log("id:", id);
-    await this.reserveTimer(id);
+    this.reserveTimer(id);
 
     const statement1 = await db.prepare(
       `UPDATE timeSlots SET status=? WHERE id= ?`
