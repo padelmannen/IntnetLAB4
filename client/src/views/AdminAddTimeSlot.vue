@@ -23,11 +23,8 @@
             autofocus
           />
           <button type="submit" class="btn btn-dark mt-4 float-end">Add</button>
-          <button
-            class="btn btn-dark mt-4 float-start"
-            @click="$emit('close')"
-            >
-              Cancel
+          <button class="btn btn-dark mt-4 float-start" @click="$emit('close')">
+            Cancel
           </button>
         </form>
       </div>
@@ -41,8 +38,7 @@
 
 export default {
   name: "configTimeslotView",
-  components: {
-  },
+  components: {},
 
   props: {
     assistant: String,
@@ -51,20 +47,23 @@ export default {
   data: () => ({
     username: "",
     open: false,
-    datepicked:"",
-    timepicked:"",
+    datepicked: "",
+    timepicked: "",
   }),
   methods: {
-
-    addTimeslot(){
-      console.log(this.assistant + datepicked.value+" "+timepicked.value)
+    addTimeslot() {
+      console.log(this.assistant + datepicked.value + " " + timepicked.value);
       fetch("/api/addTimeslot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({assistant: this.assistant, date: datepicked.value, time: timepicked.value}),
-      })
+        body: JSON.stringify({
+          assistant: this.assistant,
+          date: datepicked.value,
+          time: timepicked.value,
+        }),
+      });
 
-        this.$emit("close")
+      this.$emit("close");
     },
     authenticate() {
       const { commit } = this.$store;
@@ -87,7 +86,7 @@ export default {
 </script>
 
 <style scoped>
-.popup{
+.popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -100,7 +99,7 @@ export default {
   justify-content: center;
 }
 
-.popup-inner{
+.popup-inner {
   background: #fff;
   padding: 32px;
   border-radius: 12px;

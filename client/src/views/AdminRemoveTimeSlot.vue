@@ -3,15 +3,16 @@
     <div class="popup-inner">
       <div class="row">
         <form class="col" @submit.prevent="removeTimeslot()">
-          <label for="username" class="form-label h4">Configure Time Slot</label>
-          <p>Time: {{time}}</p>
-          <p>Booked by: {{bookedby}}</p>
-          <button type="submit" class="btn btn-dark mt-4 float-end">Remove</button>
-          <button
-            class="btn btn-dark mt-4 float-start"
-            @click="$emit('close')"
-            >Cancel
-        </button>
+          <label for="username" class="form-label h4"
+            >Configure Time Slot</label
+          >
+          <p>Time: {{ time }}</p>
+          <button type="submit" class="btn btn-dark mt-4 float-end">
+            Remove
+          </button>
+          <button class="btn btn-dark mt-4 float-start" @click="$emit('close')">
+            Cancel
+          </button>
         </form>
       </div>
     </div>
@@ -22,34 +23,30 @@
 //för timer
 //https://vuejs.org/examples/#timer
 
-
-
 export default {
   name: "configTimeslotView",
   components: {},
-  
+
   props: {
     time: String,
     id: String,
-    bookedby: String,
   },
 
   data: () => ({
     username: "",
     open: false,
   }),
-  
-  methods: {
 
-    removeTimeslot(){
-        //funktion som ska ta bort en tid
+  methods: {
+    removeTimeslot() {
+      //funktion som ska ta bort en tid
       fetch("/api/removeTimeslot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({id: this.id}),
-      })
+        body: JSON.stringify({ id: this.id }),
+      });
 
-        this.$emit("close")
+      this.$emit("close");
     },
     authenticate() {
       const { commit } = this.$store;
@@ -71,9 +68,8 @@ export default {
 };
 </script>
 
-
 <style scoped>
-.popup{
+.popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -86,7 +82,7 @@ export default {
   justify-content: center;
 }
 
-.popup-inner{
+.popup-inner {
   background: #fff;
   padding: 32px;
   border-radius: 12px;

@@ -9,17 +9,17 @@ export default createStore({
     isAuthenticated(state) {
       return state.authenticated;
     },
-    getAdminUser(state){
-      return state.adminUser
-    }
+    getAdminUser(state) {
+      return state.adminUser;
+    },
   },
   mutations: {
     setAuthenticated(state, authenticated) {
       state.authenticated = authenticated;
     },
-    setAdminUser(state, admin){
+    setAdminUser(state, admin) {
       state.adminUser = admin;
-    }
+    },
   },
   actions: {},
   modules: {},

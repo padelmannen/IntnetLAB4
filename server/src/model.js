@@ -64,7 +64,7 @@ class Model {
   }
 
   //kanske kan användas vid utloggning
-  removeUser(id){
+  removeUser(id) {
     this.users[id] = undefined;
   }
   /**
