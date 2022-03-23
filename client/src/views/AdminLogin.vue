@@ -33,7 +33,7 @@ export default {
   components: {},
   data: () => ({
     username: "",
-    password: ""
+    password: "",
   }),
   methods: {
     authenticate() {
@@ -43,22 +43,24 @@ export default {
       fetch("/api/checkLogin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: this.username, password: this.password }),
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password,
+        }),
       })
-       .then((resp) => {
-          if (resp.ok){
+        .then((resp) => {
+          if (resp.ok) {
             this.$store.commit("setAuthenticated", true);
-            this.$store.commit("setAdminUser", this.username)
+            this.$store.commit("setAdminUser", this.username);
             this.$router.push({
-            path: "/admin"+this.username,
-            })
-          }
-          else{
+              path: "/admin" + this.username,
+            });
+          } else {
             this.$store.commit("setAuthenticated", false);
             this.username = "";
             this.password = "";
           }
-       })
+        })
         .catch((error) => {
           // Ändrar inte datan här - måste jag sätta upp mutationen i store kankse?
           this.loginFail = true;

@@ -21,7 +21,9 @@ export default await (async () => {
   // Skapar upp datan som ska visas sen i tasks
 
   await db.run("DROP TABLE IF EXISTS assistants");
-  await db.run("CREATE TABLE assistants (assistantID TEXT PRIMARY KEY, password TEXT NOT NULL)");
+  await db.run(
+    "CREATE TABLE assistants (assistantID TEXT PRIMARY KEY, password TEXT NOT NULL)"
+  );
 
   await db.run("DROP TABLE IF EXISTS timeslots");
   await db.run(
@@ -41,7 +43,7 @@ export default await (async () => {
     "mikolaj 2022-03-01 14:30",
     "2022-03-01 14:30",
     "available",
-    "", 
+    "",
     ""
   );
   statement2.run(
