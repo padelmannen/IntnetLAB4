@@ -120,6 +120,7 @@ class Model {
 
     // console.log(userName);
     console.log("id:", id);
+    await this.reserveTimer(id);
 
     const statement1 = await db.prepare(
       `UPDATE timeSlots SET status=? WHERE id= ?`
@@ -127,6 +128,14 @@ class Model {
     statement1.run("reserved", id);
     statement1.finalize();
     this.io.emit("reserve", id);
+  }
+
+  async reserveTimer(id){
+    setTimeout(() => {
+      if (this.timeslots[id].status === "reserved") {
+          this.unreserveTimeslot(id);
+      }
+    }, 20000);
   }
 
   async getStatus(id) {
