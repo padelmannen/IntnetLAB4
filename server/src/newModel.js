@@ -79,6 +79,7 @@ class Model {
     // console.log(userName);
     console.log("username: ", username);
     console.log("id:", id);
+    console.log("här nu!!!")
 
     const statement1 = await db.prepare(
       `UPDATE timeslots SET bookedBy=?, status=? WHERE id= ?`
@@ -86,6 +87,7 @@ class Model {
     statement1.run(username, "booked", id);
     statement1.finalize();
     this.io.emit("book", id, username);
+    console.log("här nu 2!!!")
   }
 
   async addTimeslot(id, assistant, time) {
@@ -120,7 +122,7 @@ class Model {
 
     // console.log(userName);
     console.log("id:", id);
-    await this.reserveTimer(id);
+    this.reserveTimer(id);
 
     const statement1 = await db.prepare(
       `UPDATE timeSlots SET status=? WHERE id= ?`

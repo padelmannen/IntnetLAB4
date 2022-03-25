@@ -38,6 +38,7 @@
         v-if="showConfigWindow"
         :id="id"
         :time="curTimePressed"
+        :assistant="curAssistant"
         @close="() => closeConfigWindow()"
       />
       <Add
@@ -115,6 +116,14 @@ export default {
       push({
         path: "adminlogin",
       }).catch(console.error);
+
+      fetch("/api/logout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+
+
+
     },
     configTimeslot(timeslot) {
       // this.$router.push(`/rooms/${name}`);
@@ -122,6 +131,7 @@ export default {
       this.closeAddWindow();
       this.curTimePressed = timeslot.time;
       this.id = timeslot.id;
+      this.curAssistant = timeslot.assistantID;
       this.showConfigWindow = true;
       // alert("TID VALD: "+ time);
     },
