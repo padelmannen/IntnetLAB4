@@ -82,10 +82,7 @@ export default {
       this.windowOpen = false;
       this.$emit("close");
     },
-    // authenticate() {
-    //   const { commit } = this.$store;
-    //   const { push } = this.$router;
-    // },
+
     book(timeslotID) {
       console.log("tsID: ", timeslotID);
       // funktion som ska göra en tid bokad
@@ -101,10 +98,6 @@ export default {
         .then((res) => res.json())
         .then(() => {
           this.$emit("close");
-          // .then(({ authenticated }) => {
-          //   commit("setAuthenticated", authenticated);
-          //   push(authenticated === true ? "/admin" : "/booking");
-          // })
         })
         .catch(console.error);
     },

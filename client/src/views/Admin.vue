@@ -118,12 +118,9 @@ export default {
       }).catch(console.error);
 
       fetch("/api/logout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        });
-
-
-
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
     },
     configTimeslot(timeslot) {
       // this.$router.push(`/rooms/${name}`);

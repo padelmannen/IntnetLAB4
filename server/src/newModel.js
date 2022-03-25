@@ -51,10 +51,7 @@ class Model {
     console.log("password:", password);
 
     console.log(this.users);
-    // const sql =
-    //   (`SELECT * from assistants WHERE assistantID= ? AND password = ?`,
-    //   username,
-    //   password);
+
     const acceptedLogin = await db.get(
       `SELECT * from assistants WHERE assistantID= ? AND password = ?`,
       username,
@@ -69,17 +66,9 @@ class Model {
   }
 
   async bookTimeslot(username, id) {
-    /* const theBooked = this.findTimeslotByID(id);
-        console.log(theBooked);
-        theBooked.addStatus("booked");
-        theBooked.addBookedBy(bookerName);
-        console.log(theBooked.bookedBy, "är här");
-        */
-
-    // console.log(userName);
     console.log("username: ", username);
     console.log("id:", id);
-    console.log("här nu!!!")
+    console.log("här nu!!!");
 
     const statement1 = await db.prepare(
       `UPDATE timeslots SET bookedBy=?, status=? WHERE id= ?`
@@ -87,18 +76,10 @@ class Model {
     statement1.run(username, "booked", id);
     statement1.finalize();
     this.io.emit("book", id, username);
-    console.log("här nu 2!!!")
+    console.log("här nu 2!!!");
   }
 
   async addTimeslot(id, assistant, time) {
-    /* const theBooked = this.findTimeslotByID(id);
-      console.log(theBooked);
-      theBooked.addStatus("booked");
-      theBooked.addBookedBy(bookerName);
-      console.log(theBooked.bookedBy, "är här");
-      */
-
-    // console.log(userName);
     console.log("assistant: ", assistant);
     console.log("time: ", time);
     console.log("id:", id);
@@ -113,14 +94,6 @@ class Model {
   }
 
   async reserveTimeslot(id) {
-    /* const theBooked = this.findTimeslotByID(id);
-      console.log(theBooked);
-      theBooked.addStatus("booked");
-      theBooked.addBookedBy(bookerName);
-      console.log(theBooked.bookedBy, "är här");
-      */
-
-    // console.log(userName);
     console.log("id:", id);
     this.reserveTimer(id);
 
@@ -132,10 +105,10 @@ class Model {
     this.io.emit("reserve", id);
   }
 
-  async reserveTimer(id){
+  async reserveTimer(id) {
     setTimeout(() => {
       if (this.timeslots[id].status === "reserved") {
-          this.unreserveTimeslot(id);
+        this.unreserveTimeslot(id);
       }
     }, 20000);
   }
@@ -148,14 +121,6 @@ class Model {
   }
 
   async unreserveTimeslot(id) {
-    /* const theBooked = this.findTimeslotByID(id);
-      console.log(theBooked);
-      theBooked.addStatus("booked");
-      theBooked.addBookedBy(bookerName);
-      console.log(theBooked.bookedBy, "är här");
-      */
-
-    // console.log(userName);
     console.log("id:", id);
     const status = await this.getStatus(id);
     console.log(status);
@@ -171,14 +136,7 @@ class Model {
 
   async removeTimeslot(id) {
     console.log("removing");
-    /* const theBooked = this.findTimeslotByID(id);
-      console.log(theBooked);
-      theBooked.addStatus("booked");
-      theBooked.addBookedBy(bookerName);
-      console.log(theBooked.bookedBy, "är här");
-      */
 
-    // console.log(userName);
     console.log("inside deletetimelsot method in model");
     const statement = await db.prepare("DELETE FROM timeslots WHERE id = (?)");
     statement.run(id);

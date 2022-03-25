@@ -12,11 +12,7 @@ const router = Router();
  */
 
 const requireAuth = (req, res, next) => {
-  // Use an unique session identifier to access information about the user making the request.
-  // const { id } = req.session;
-  // const user = model.findUserById(id);
-
-  const {assistant} = req.session;
+  const { assistant } = req.session;
   console.log("assistant", assistant);
 
   if (assistant === undefined) {
@@ -42,50 +38,25 @@ router.get("/timeslots", async (req, res) => {
 });
 
 router.post("/reserve", async (req, res) => {
-  /* console.log('bookername: ', req.body.bookerName);
-    console.log('id: ', bookedSlot); */
-
-  // const { socketID } = req.session;
-  // model.join(socketID, "/start");
-
   await model.reserveTimeslot(req.body.timeslotID);
-
-  // måste typ lägga in status ok här
 
   res.status(200).json({ authenticated: true });
 });
 
 router.post("/unreserve", async (req, res) => {
-  /* console.log('bookername: ', req.body.bookerName);
-    console.log('id: ', bookedSlot); */
-
-  // const { socketID } = req.session;
-  // model.join(socketID, "/start");
-
   await model.unreserveTimeslot(req.body.timeslotID);
-
-  // måste typ lägga in status ok här
 
   res.status(200).json({ authenticated: true });
 });
 
 router.post("/booking", async (req, res) => {
-  /* console.log('bookername: ', req.body.bookerName);
-    console.log('id: ', bookedSlot); */
-
-  // const { socketID } = req.session;
-  // model.join(socketID, "/start");
-
-  const status = await model.getStatus(req.body.timeslotID)
-  if (status === "booked"){
+  const status = await model.getStatus(req.body.timeslotID);
+  if (status === "booked") {
     res.sendStatus(403);
-    
-  }
-  else{
+  } else {
     await model.bookTimeslot(req.body.username, req.body.timeslotID);
     res.status(200).json({ authenticated: true });
-  } 
-  // måste typ lägga in status ok här
+  }
 });
 
 router.post("/checkLogin", async (req, res) => {
@@ -101,46 +72,11 @@ router.post("/checkLogin", async (req, res) => {
     console.log("inte godkänt i router");
     res.sendStatus(403);
   }
-
-  // (loginStatus, assistantId) => {
-  //     // definera enkklare i modelen - hämtar användarnamn - hjälpfunktioner!
-
-  //     if (loginStatus) {
-  //         // Saves the assistant
-  //         req.session.assistantId = assistantId.username;
-  //         /* if (!req.session.assistantId) {
-
-  //             } */
-  //         console.log("req.sessionId", req.sessionID);
-
-  //         res.cookie("adminCookie", toString(req.sessionID));
-  //         console.log("här kommer res.cookie:  ", res.cookie);
-
-  //         console.log("i checklogin", req.session.assistantId);
-  //         // Görs automatiskt - session, men varje har samma
-
-  //         // Sparar session
-  //         req.session.save((err) => {
-  //             if (err) {
-  //                 res.sendStatus(403);
-  //                 console.log(err);
-  //             } else {
-  //                 console.debug(`Admin ${assistantId} logged in.`);
-  //                 res.sendStatus(200);
-  //             }
-  //         });
-  //     } else {
-  //         // error that transports you back to login
-  //         res.sendStatus(403);
-  //     }
-  // }
-  // );
 });
 
 router.post("/logout", async (req, res) => {
-
   req.session.assistant = undefined;
   res.status(200).json({ authenticated: false });
 });
 
-export default { router, requireAuth};
+export default { router, requireAuth };

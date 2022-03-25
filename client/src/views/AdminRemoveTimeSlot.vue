@@ -36,7 +36,7 @@ export default {
     assistant: {
       type: String,
       default: "",
-    }
+    },
   },
   emits: ["close"],
 
@@ -50,10 +50,10 @@ export default {
       fetch("/api/removeTimeslot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           id: this.id,
           assistant: this.assistant,
-         }),
+        }),
       });
 
       this.$emit("close");
