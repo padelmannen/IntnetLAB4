@@ -76,11 +76,16 @@ router.post("/booking", async (req, res) => {
   // const { socketID } = req.session;
   // model.join(socketID, "/start");
 
-  await model.bookTimeslot(req.body.username, req.body.timeslotID);
-
+  const status = await model.getStatus(req.body.timeslotID)
+  if (status === "booked"){
+    res.sendStatus(403);
+    
+  }
+  else{
+    await model.bookTimeslot(req.body.username, req.body.timeslotID);
+    res.status(200).json({ authenticated: true });
+  } 
   // måste typ lägga in status ok här
-
-  res.status(200).json({ authenticated: true });
 });
 
 router.post("/checkLogin", async (req, res) => {
@@ -136,18 +141,6 @@ router.post("/logout", async (req, res) => {
 
   req.session.assistant = undefined;
   res.status(200).json({ authenticated: false });
-});
-
-router.post("/booking", (req, res) => {
-  // Check how to access data being sent as a path, query, header and cookie parameter or in the HTTP request body.
-  // const { username } = req.body;
-  console.log("inne i auth booking");
-  console.log("user: ", req.body.username, "id:", req.body.timeslotID);
-  model.bookTimeslot(req.body.username, req.body.timeslotID);
-
-  // måste typ lägga in status ok här
-
-  res.status(200).json({ authenticated: true });
 });
 
 export default { router, requireAuth};
